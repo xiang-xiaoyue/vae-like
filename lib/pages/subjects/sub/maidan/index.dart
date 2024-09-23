@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:trump/components/avatar.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/models/resp/models/subject.dart';
 import 'package:trump/pages/notice/export.dart';
@@ -245,12 +246,14 @@ class _RecommendedSubjectBody extends StatelessWidget {
               itemBuilder: (context, position) {
                 return Container(
                   alignment: Alignment.center,
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CustomAvatar(size: 50),
+                      UserAvatar(
+                          url: vm.recommendedSubjects[position].coverUrlList,
+                          size: 50),
                       Text(
-                        "呼吸之野",
+                        vm.recommendedSubjects[position].name,
                         style: TextStyle(fontSize: 14),
                       ),
                     ],

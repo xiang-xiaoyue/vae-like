@@ -63,9 +63,9 @@ class _PayCardItem extends StatelessWidget {
   final int rmb;
   const _PayCardItem({
     super.key,
-    this.cashCount = 60,
-    this.extraCashCount = 5,
-    this.rmb = 6,
+    this.cashCount = 60, // 余额/现金数
+    this.extraCashCount = 5, // 额外赠送的余额数
+    this.rmb = 6, // 需要支付人民币数量
   });
 
   @override
@@ -74,7 +74,7 @@ class _PayCardItem extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.blueGrey.shade100,
+        color: Color(0xfff3f6ff),
         borderRadius: BorderRadius.circular(8),
       ),
       child: ListTile(
@@ -90,10 +90,13 @@ class _PayCardItem extends StatelessWidget {
         trailing: TrumpButton(
           width: 65,
           height: 40,
+          borderStyle: BorderStyle.none,
           borderRadius: 4,
           text: "￥$rmb",
           backgroundColor: Colors.blue,
           textColor: Colors.white,
+          // 点击拉起app，支付
+          // 支付成功之后
         ),
       ),
     );
