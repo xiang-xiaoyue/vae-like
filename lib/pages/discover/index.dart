@@ -6,7 +6,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/bottom_navigator_bar.dart';
 import 'package:trump/configs/const.dart';
-import 'package:trump/pages/discover/sub/task_center/vm.dart';
 import 'package:trump/pages/discover/vm.dart';
 
 class DiscoverPage extends StatelessWidget {
@@ -14,56 +13,54 @@ class DiscoverPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: TrumpBottomNavigatorBar(),
-      body: Stack(
-        alignment: Alignment.topCenter,
-        fit: StackFit.expand,
-        children: [
-          Column(
-            children: [
-              Container(
-                height: 240,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage("assets/images/2.jpg"),
-                    fit: BoxFit.cover,
-                  ),
+    return Stack(
+      alignment: Alignment.topCenter,
+      fit: StackFit.expand,
+      children: [
+        Column(
+          children: [
+            Container(
+              height: 240,
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/2.jpg"),
+                  fit: BoxFit.cover,
                 ),
               ),
-            ],
-          ),
-          ChangeNotifierProvider<DiscoverViewModel>(
-            create: (context) => DiscoverViewModel(),
-            child: Positioned(
-              left: 0,
-              right: 0,
-              top: 200,
-              child: Column(
-                children: [
-                  _MenuItemWrapper(list: [
-                    _MenuItem(
-                      icon: Icons.search,
-                      text: "输入对方的ID号或昵称",
-                      pathName: "search",
-                      queryParameters: {"type": Constants.searchTypeUser},
-                    ),
-                  ]),
-                  _MenuItemWrapper(list: [
-                    _MenuItem(
-                      icon: Icons.location_on,
-                      text: "附近的人",
-                      pathName: "search",
-                      queryParameters: {"type": "nearby"},
-                    ),
-                    _MenuItem(
-                      icon: Icons.group,
-                      text: "发现群组",
-                      pathName: "search",
-                      queryParameters: {"type": "group"},
-                    ),
-                  ]),
-                  /*
+            ),
+          ],
+        ),
+        ChangeNotifierProvider<DiscoverViewModel>(
+          create: (context) => DiscoverViewModel(),
+          child: Positioned(
+            left: 0,
+            right: 0,
+            top: 200,
+            child: Column(
+              children: [
+                _MenuItemWrapper(list: const [
+                  _MenuItem(
+                    icon: Icons.search,
+                    text: "输入对方的ID号或昵称",
+                    pathName: "search",
+                    queryParameters: {"type": Constants.searchTypeUser},
+                  ),
+                ]),
+                _MenuItemWrapper(list: const [
+                  _MenuItem(
+                    icon: Icons.location_on,
+                    text: "附近的人",
+                    pathName: "search",
+                    queryParameters: {"type": "nearby"},
+                  ),
+                  _MenuItem(
+                    icon: Icons.group,
+                    text: "发现群组",
+                    pathName: "search",
+                    queryParameters: {"type": "group"},
+                  ),
+                ]),
+                /*
                   _MenuItemWrapper(list: [
                     _MenuItem(
                       icon: Icons.home,
@@ -72,45 +69,44 @@ class DiscoverPage extends StatelessWidget {
                     ),
                   ]),
                   */
-                  _MenuItemWrapper(list: [
-                    Consumer<DiscoverViewModel>(builder: (context, vm, _) {
-                      return _MenuItem(
-                        icon: Icons.check,
-                        text: "每日签到",
-                        tailText: vm.isCheckedIn ? "已签到" : "未签到",
-                        pathName: "sign",
-                      );
-                    }),
-                    Consumer<DiscoverViewModel>(builder: (context, vm, _) {
-                      return _MenuItem(
-                        icon: Icons.task,
-                        text: "任务中心",
-                        tailText: "完成度${vm.taskProgress}%",
-                        pathName: "task_center",
-                      );
-                    }),
-                    _MenuItem(
-                      icon: Icons.sort_by_alpha,
-                      text: "排行榜",
-                      pathName: "user_rank",
-                    ),
-                    _MenuItem(
-                      icon: Icons.shop,
-                      text: "商城",
-                      pathName: "shop",
-                    ),
-                    _MenuItem(
-                      icon: Icons.home,
-                      text: "最热帖排行",
-                      pathName: "post_rank_list",
-                    ), //最热帖子排行
-                  ]),
-                ],
-              ),
+                _MenuItemWrapper(list: [
+                  Consumer<DiscoverViewModel>(builder: (context, vm, _) {
+                    return _MenuItem(
+                      icon: Icons.check,
+                      text: "每日签到",
+                      tailText: vm.isCheckedIn ? "已签到" : "未签到",
+                      pathName: "sign",
+                    );
+                  }),
+                  Consumer<DiscoverViewModel>(builder: (context, vm, _) {
+                    return _MenuItem(
+                      icon: Icons.task,
+                      text: "任务中心",
+                      tailText: "完成度${vm.taskProgress}%",
+                      pathName: "task_center",
+                    );
+                  }),
+                  _MenuItem(
+                    icon: Icons.sort_by_alpha,
+                    text: "排行榜",
+                    pathName: "user_rank",
+                  ),
+                  _MenuItem(
+                    icon: Icons.shop,
+                    text: "商城",
+                    pathName: "shop",
+                  ),
+                  _MenuItem(
+                    icon: Icons.home,
+                    text: "最热帖排行",
+                    pathName: "post_rank_list",
+                  ), //最热帖子排行
+                ]),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

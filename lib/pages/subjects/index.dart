@@ -2,15 +2,11 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:trump/components/bottom_navigator_bar.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/components/toast.dart';
 import 'package:trump/configs/const.dart';
 import 'package:trump/pages/mine/vm.dart';
 import 'package:trump/pages/subjects/export.dart';
-import 'package:trump/pages/subjects/sub/maidan/index.dart';
-import 'package:trump/service/save.dart';
-import 'package:trump/util/guard.dart';
 
 class SubjectPage extends StatefulWidget {
   const SubjectPage({super.key});
@@ -37,41 +33,34 @@ class _SubjectPageState extends State<SubjectPage>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        //onPressed: () => context.pushNamed("for_test"),
-        onPressed: () => context.showToast("hello"),
-        child: Text("toTest"),
-      ),
-      bottomNavigationBar: const TrumpBottomNavigatorBar(),
-      backgroundColor: Colors.grey.shade300,
-      body: SafeArea(
-        child: Stack(
-          fit: StackFit.expand,
-          children: [
-            Container(
+    return SafeArea(
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          Center(
+            child: Container(
               padding: EdgeInsets.only(top: TrumpSize.appBarHeight),
               child: TabBarView(
                 physics: NeverScrollableScrollPhysics(),
                 controller: _controller,
                 children: const [
-                  MaidanTabBarView(),
-                  HotTabBarView(),
-                  FollowingTabBarView(),
+                  KeepAliveWrapper(child: MaidanTabBarView()),
+                  KeepAliveWrapper(child: HotTabBarView()),
+                  KeepAliveWrapper(child: FollowingTabBarView()),
                 ],
               ),
             ),
-            Positioned(
-              left: 0,
-              right: 0,
-              top: 0,
-              child: SizedBox(
-                height: 48,
-                child: _AppBar(tabs: _tabs, controller: _controller),
-              ),
+          ),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            child: SizedBox(
+              height: 48,
+              child: _AppBar(tabs: _tabs, controller: _controller),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -19,33 +19,25 @@ class MinePage extends StatefulWidget {
 class _MinePageState extends State<MinePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.white,
-        scrolledUnderElevation: 0, // 上滑时让顶部栏看起来没有阴影
-      ),
-      bottomNavigationBar: const TrumpBottomNavigatorBar(),
-      body: Consumer<CurrentUserViewModel>(builder: (context, vm, _) {
-        return vm.isLoggedIn == true
-            ? SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const _MineInfoPanel(),
-                    if (vm.user != null)
-                      ...mineMenus.map((m) {
-                        if (m == null) {
-                          return const SizedBox(height: 16);
-                        } else {
-                          return MenuListItem(menu: m);
-                        }
-                      }),
-                  ],
-                ),
-              )
-            : const _NotLogin();
-      }),
-    );
+    return Consumer<CurrentUserViewModel>(builder: (context, vm, _) {
+      return vm.isLoggedIn == true
+          ? SingleChildScrollView(
+              child: Column(
+                children: [
+                  const _MineInfoPanel(),
+                  if (vm.user != null)
+                    ...mineMenus.map((m) {
+                      if (m == null) {
+                        return const SizedBox(height: 16);
+                      } else {
+                        return MenuListItem(menu: m);
+                      }
+                    }),
+                ],
+              ),
+            )
+          : const _NotLogin();
+    });
   }
 }
 

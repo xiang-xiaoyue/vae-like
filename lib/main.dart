@@ -9,7 +9,6 @@ import 'package:trump/configs/routes/index.dart';
 import 'package:trump/pages/mine/vm.dart';
 import 'package:trump/service/dio_instance.dart';
 import 'package:trump/vm.dart';
-import 'package:web_socket_channel/status.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +40,7 @@ void main() {
 
 GoRouter _router = GoRouter(
   routes: routes,
-  initialLocation: "/home",
+  initialLocation: "/",
 );
 
 class MyApp extends StatefulWidget {

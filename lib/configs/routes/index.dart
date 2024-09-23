@@ -1,7 +1,8 @@
 import 'package:go_router/go_router.dart';
 import 'package:trump/configs/const.dart';
+import 'package:trump/configs/routes/home.dart';
 import 'package:trump/pages/for_test.dart';
-import 'package:trump/pages/home/export.dart';
+import 'package:trump/pages/index.dart';
 import 'package:trump/pages/notice/export.dart';
 
 import 'package:trump/configs/routes/discover.dart';
@@ -33,70 +34,21 @@ List<GoRoute> routes = [
       builder: (context, state) =>
           PicDetailPage(url: state.uri.queryParameters['url'] ?? '')),
   GoRoute(
-    path: "/home",
-    name: "home",
-    builder: (context, state) => const HomePage(),
+    path: "/",
+    name: "index",
+    builder: (context, state) => const IndexPage(),
     routes: [
-      GoRoute(
-        name: "hot_user_content_list",
-        path: "hot_user_content_list",
-        builder: (context, state) => const HotUserContentPage(),
-      ),
-      GoRoute(
-        name: "work_list",
-        path: "work_list",
-        builder: (context, state) => const WorkListPage(),
-      ),
-      GoRoute(
-        name: "trip_list",
-        path: "trip_list",
-        builder: (context, state) => const TripListPage(),
-      ),
-      GoRoute(
-        name: "activity_list",
-        path: "activity_list",
-        builder: (context, state) => const ActivityListPage(),
-      ),
-      GoRoute(
-        name: "video_list",
-        path: "video_list",
-        builder: (context, state) => const VideoListPage(),
-      ),
-      GoRoute(
-        name: "atlas",
-        path: "atlas",
-        builder: (context, state) => const AtlasPage(),
-      ),
+      ...homeRoutes,
+      ...discoverRoutes,
+      ...mineRoutes,
+      ...noticeRoutes,
     ],
-  ),
-  GoRoute(
-    path: "/discover",
-    name: "discover",
-    builder: (context, state) => const DiscoverPage(),
-    routes: discoverRoutes,
-  ),
-  GoRoute(
-    path: "/mine",
-    name: "mine",
-    builder: (context, state) => const MinePage(),
-    routes: mineRoutes,
   ),
   GoRoute(
     path: "/help_center",
     name: "help_center",
     builder: (context, state) => const HelpCenterPage(),
     routes: helpRoutes,
-  ),
-  GoRoute(
-    path: "/notice",
-    name: "notice",
-    builder: (context, state) => const NoticeIndexPage(),
-    routes: noticeRoutes,
-  ),
-  GoRoute(
-    path: "/subject",
-    name: "subject",
-    builder: (context, state) => const SubjectPage(),
   ),
   GoRoute(
     path: "/subject_item_detail",

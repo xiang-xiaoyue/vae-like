@@ -13,22 +13,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: const TrumpBottomNavigatorBar(),
-      body: SafeArea(
-        child: ChangeNotifierProvider(
-          create: (context) => HomeViewModel(),
-          child: const CustomScrollView(
-            slivers: [
-              _HomePageAppBar(),
-              _HomePic(),
-              _MenuTab(), // 行程、图集、作品、视频、活动
-              _LatestTrend(), //hot-user发表的最新post/comment,点击查看详情
-              _TrendListHeader(), // 官方动态头部
-              _TrendList(), // 官方动态列表
-            ],
-          ),
+    return SafeArea(
+      child: ChangeNotifierProvider(
+        create: (context) => HomeViewModel(),
+        child: const CustomScrollView(
+          slivers: [
+            _HomePageAppBar(),
+            _HomePic(),
+            _MenuTab(), // 行程、图集、作品、视频、活动
+            _LatestTrend(), //hot-user发表的最新post/comment,点击查看详情
+            _TrendListHeader(), // 官方动态头部
+            _TrendList(), // 官方动态列表
+          ],
         ),
       ),
     );

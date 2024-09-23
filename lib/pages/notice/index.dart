@@ -10,35 +10,31 @@ class NoticeIndexPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      bottomNavigationBar: const TrumpBottomNavigatorBar(),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              AppBar(
-                title: const Text("消息"),
-                automaticallyImplyLeading: false,
-                centerTitle: true,
-                actions: [
-                  GestureDetector(
-                    child: const Text("联系人"),
-                    onTap: () {
-                      context.pushNamed("contacts");
-                    },
-                  ),
-                  const SizedBox(width: 16),
-                ],
-              ),
-              const _NoticeMenuItem(
-                  pathName: "official_notice", text: "官方消息", count: 2),
-              const _NoticeMenuItem(
-                  pathName: "at_me_notice", text: "@我的", count: 3),
-              const _NoticeMenuItem(pathName: "comment_notice", text: "评论"),
-              const _NoticeMenuItem(pathName: "like_notice", text: "赞"),
-            ],
-          ),
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            AppBar(
+              title: const Text("消息"),
+              automaticallyImplyLeading: false,
+              centerTitle: true,
+              actions: [
+                GestureDetector(
+                  child: const Text("联系人"),
+                  onTap: () {
+                    context.pushNamed("contacts");
+                  },
+                ),
+                const SizedBox(width: 16),
+              ],
+            ),
+            const _NoticeMenuItem(
+                pathName: "official_notice", text: "官方消息", count: 2),
+            const _NoticeMenuItem(
+                pathName: "at_me_notice", text: "@我的", count: 3),
+            const _NoticeMenuItem(pathName: "comment_notice", text: "评论"),
+            const _NoticeMenuItem(pathName: "like_notice", text: "赞"),
+          ],
         ),
       ),
     );
