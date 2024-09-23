@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/models/resp/models/subject.dart';
+import 'package:trump/pages/notice/export.dart';
 import 'package:trump/pages/subjects/sub/maidan/vm.dart';
 
 // 广场
@@ -38,8 +39,11 @@ class _MaidanTabBarViewState extends State<MaidanTabBarView> {
                   separatorBuilder: (ctx, idx) => const SizedBox(height: 4),
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: vm.posts.length,
+                  itemCount: vm.posts.length + 1,
                   itemBuilder: (ctx, idx) {
+                    if (idx == vm.posts.length) {
+                      return NoMore();
+                    }
                     return PostItem(post: vm.posts[idx]);
                   },
                 ),
