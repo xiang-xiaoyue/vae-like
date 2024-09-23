@@ -19,7 +19,6 @@ class MaidanPageViewModel with ChangeNotifier {
 
   // 官方推荐话题列表
   List<Subject> recommendedSubjects = [];
-  int recommendedSubjectCount = 0;
 
   List<Post> posts = [];
   int postCount = 0;
@@ -38,7 +37,6 @@ class MaidanPageViewModel with ChangeNotifier {
   // 获取官方推荐话题
   Future getRecommendedSubjectList() async {
     ListResp listResp = await Api.instance.getSubjectList(isRecommended: true);
-    recommendedSubjectCount = listResp.count ?? 0;
     recommendedSubjects.clear();
     listResp.list?.forEach((i) {
       recommendedSubjects.add(Subject.fromJson(i));

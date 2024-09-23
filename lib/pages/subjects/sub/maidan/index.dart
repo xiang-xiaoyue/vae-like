@@ -170,9 +170,9 @@ class _RecommendedSubjectListState extends State<_RecommendedSubjectList> {
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   scrollDirection: Axis.horizontal,
-                  itemCount: (vm.recommendedSubjectCount % 8) > 0
-                      ? (vm.recommendedSubjectCount ~/ 8) + 1
-                      : (vm.recommendedSubjectCount ~/ 8),
+                  itemCount: (vm.recommendedSubjects.length % 8) > 0
+                      ? (vm.recommendedSubjects.length ~/ 8) + 1
+                      : (vm.recommendedSubjects.length ~/ 8),
                   itemBuilder: (context, index) {
                     return Center(
                       child: Container(
@@ -205,9 +205,9 @@ class _RecommendedSubjectBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<MaidanPageViewModel>(builder: (context, vm, child) {
       return PageView.builder(
-        itemCount: (vm.recommendedSubjectCount % 8) > 0
-            ? (vm.recommendedSubjectCount ~/ 8) + 1
-            : (vm.recommendedSubjectCount ~/ 8),
+        itemCount: (vm.recommendedSubjects.length % 8) > 0
+            ? (vm.recommendedSubjects.length ~/ 8) + 1
+            : (vm.recommendedSubjects.length ~/ 8),
         onPageChanged: changePage,
         itemBuilder: (BuildContext context, int index) {
           return ScrollConfiguration(
@@ -216,9 +216,9 @@ class _RecommendedSubjectBody extends StatelessWidget {
               padding: EdgeInsets.only(top: 4),
               shrinkWrap: true,
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: (index < (vm.recommendedSubjectCount ~/ 8))
+              itemCount: (index < (vm.recommendedSubjects.length ~/ 8))
                   ? 8
-                  : (vm.recommendedSubjectCount % 8),
+                  : (vm.recommendedSubjects.length % 8),
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 4,
                 childAspectRatio: 8 / 7,
