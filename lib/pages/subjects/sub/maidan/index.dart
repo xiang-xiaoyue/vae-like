@@ -62,7 +62,11 @@ class _MaidanTabBarViewState extends State<MaidanTabBarView> {
                       if (idx == vm.posts.length) {
                         return NoMore();
                       }
-                      return PostItem(post: vm.posts[idx]);
+                      return PostItem(
+                          setCurrentPostId: (id) {
+                            vm.replacePostById(id);
+                          },
+                          post: vm.posts[idx]);
                     },
                   ),
                 ],

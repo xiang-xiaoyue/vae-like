@@ -48,8 +48,7 @@ class CreateCommentPage extends StatelessWidget {
                 onPressed: () {
                   vm.publishComment().then((success) {
                     if (success == true) {
-                      context.pushReplacementNamed("post_detail",
-                          pathParameters: {"id": postId.toString()});
+                      context.pop(true);
                     } else {
                       context.showToast("评论失败");
                     }

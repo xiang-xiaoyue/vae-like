@@ -21,8 +21,6 @@ class PostDetailViewModel with ChangeNotifier {
   // 获取post详情
   Future _getPostDetail(String id) async {
     post = await Api.instance.getPostByID(id: id);
-    print(
-        "标题：${post?.title}--图片：${post?.imageList}--${post?.imageList.length}");
     notifyListeners();
   }
 
@@ -59,7 +57,7 @@ class PostDetailViewModel with ChangeNotifier {
     } else {
       isSuccess = await Api.instance.collectPost(post!.id);
     }
-    if (isSuccess) {
+    if (isSuccess == true) {
       post!.isCollecting = !post!.isCollecting;
       notifyListeners();
     }

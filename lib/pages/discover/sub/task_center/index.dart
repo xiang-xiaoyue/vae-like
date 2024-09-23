@@ -178,8 +178,9 @@ class _TaskItem extends StatelessWidget {
             TrumpButton(
               width: 80,
               height: 35,
-              borderStyle:
-                  note.gainReward ? BorderStyle.none : BorderStyle.solid,
+              borderStyle: note.doneCount >= note.task.requireCount
+                  ? BorderStyle.none
+                  : BorderStyle.solid,
               text: note.doneCount < note.task.requireCount
                   ? note.task.name != "online-minutes"
                       ? ("${note.doneCount}/${note.task.requireCount}")

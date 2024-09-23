@@ -9,14 +9,25 @@ import '../exports.dart';
 // post列表页面展示的条目，如果不是长文，就尽量展示，todo: 如果是长文，还没见过怎么展示的，暂时不管
 class PostItem extends StatelessWidget {
   final Post post;
-  PostItem({super.key, required this.post});
+  final Function? setCurrentPostId;
+  PostItem({
+    super.key,
+    required this.post,
+    this.setCurrentPostId,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.pushNamed("post_detail",
-            pathParameters: {"id": (post.id).toString()});
+        context.pushNamed(
+          "post_detail",
+          pathParameters: {"id": (post.id).toString()},
+        ).then((_) {
+          if (setCurrentPostId != null) {
+            setCurrentPostId!(post.id);
+          }
+        });
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),

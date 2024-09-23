@@ -167,14 +167,14 @@ class PostDetailFooterToolBar extends StatelessWidget {
               ),
               IconButton(
                   // 评论post
-                  onPressed: () => context.pushReplacementNamed(
-                          "create_comment",
-                          queryParameters: {
-                            "post_id": vm.post!.id.toString(),
-                            "top_id": "0",
-                            "parent_id": "0",
-                            "parent_content": '',
-                          }),
+                  onPressed: () {
+                    context.pushNamed("create_comment", queryParameters: {
+                      "post_id": vm.post!.id.toString(),
+                      "top_id": "0",
+                      "parent_id": "0",
+                      "parent_content": '',
+                    });
+                  },
                   icon:
                       const Icon(Icons.comment_outlined, color: Colors.black)),
               IconButton(

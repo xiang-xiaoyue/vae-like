@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:trump/configs/const.dart';
 import 'package:trump/configs/routes/notice.dart';
 import 'package:trump/models/resp/index.dart';
@@ -26,6 +27,7 @@ class MaidanPageViewModel with ChangeNotifier {
   List<Post> posts = [];
   int postPageIndex = 1;
   int postPageSize = 3;
+  int currentPostId = 0; //当前被点击查看详情的post的id
 
   bool isLoadingPostList = false;
   bool noMoreOldPost = false; // 没有更多旧数据
@@ -62,6 +64,14 @@ class MaidanPageViewModel with ChangeNotifier {
     } else {
       _loadNewestPostList();
     }
+    notifyListeners();
+  }
+
+  // 从详情页面退回时，重新加载指定的post,并替换
+  Future replacePostById(int id) async {
+    Post p = await Api.instance.getPostByID(id: id.toString());
+    int idx = posts.indexWhere((i) => i.id == p.id);
+    posts.replaceRange(idx, idx + 1, [p]);
     notifyListeners();
   }
 
