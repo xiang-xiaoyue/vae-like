@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
+import 'package:trump/pages/notice/export.dart';
 import 'package:trump/pages/subjects/sub/hot/vm.dart';
 
 class HotTabBarView extends StatefulWidget {
@@ -20,13 +21,16 @@ class _HotTabBarViewState extends State<HotTabBarView> {
         return Padding(
           padding: EdgeInsets.all(16.0),
           child: ListView.separated(
+            itemCount: vm.count + 1,
             itemBuilder: (context, index) {
+              if (index == vm.count) {
+                return NoMore();
+              }
               return PostItem(post: vm.posts[index]);
             },
             separatorBuilder: (context, index) {
               return SizedBox(height: 4);
             },
-            itemCount: vm.count,
           ),
         );
       }),

@@ -51,6 +51,7 @@ class _SubjectPageState extends State<SubjectPage>
             Container(
               padding: EdgeInsets.only(top: TrumpSize.appBarHeight),
               child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 controller: _controller,
                 children: const [
                   MaidanTabBarView(),
