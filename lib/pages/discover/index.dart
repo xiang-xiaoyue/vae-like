@@ -26,7 +26,7 @@ class DiscoverPage extends StatelessWidget {
                 height: 240,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage("assets/images/5.jpg"),
+                    image: AssetImage("assets/images/2.jpg"),
                     fit: BoxFit.cover,
                   ),
                 ),

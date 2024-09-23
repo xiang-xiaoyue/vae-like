@@ -46,7 +46,7 @@ class _AtlasItem extends StatelessWidget {
         ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.asset(
-            "assets/images/5.jpg",
+            "assets/images/2.jpg",
             fit: BoxFit.cover,
           ),
         ),
