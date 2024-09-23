@@ -251,6 +251,13 @@ class _RecommendedSubjectBody extends StatelessWidget {
                     children: [
                       UserAvatar(
                           url: vm.recommendedSubjects[position].coverUrlList,
+                          onTap: () {
+                            context
+                                .pushNamed("subject_detail", queryParameters: {
+                              "id":
+                                  vm.recommendedSubjects[position].id.toString()
+                            });
+                          },
                           size: 50),
                       Text(
                         vm.recommendedSubjects[position].name,
