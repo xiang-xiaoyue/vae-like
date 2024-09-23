@@ -15,6 +15,7 @@ class MaidanTabBarView extends StatefulWidget {
 }
 
 class _MaidanTabBarViewState extends State<MaidanTabBarView> {
+  final ScrollController scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<MaidanPageViewModel>(
@@ -27,27 +28,44 @@ class _MaidanTabBarViewState extends State<MaidanTabBarView> {
           onRefresh: () async {
             vm.getRecommendedSubjectList();
             vm.getSubjectList();
-            vm.getPostList();
+            vm.getPostList(requireNewest: true);
           },
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const _RecommendedSubjectList(),
-                const _HotSubjectListHeader(),
-                const _HotSubjectList(),
-                ListView.separated(
-                  separatorBuilder: (ctx, idx) => const SizedBox(height: 4),
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: vm.posts.length + 1,
-                  itemBuilder: (ctx, idx) {
-                    if (idx == vm.posts.length) {
-                      return NoMore();
-                    }
-                    return PostItem(post: vm.posts[idx]);
-                  },
-                ),
-              ],
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (nf) {
+              if (nf.metrics.pixels + 30 >= nf.metrics.maxScrollExtent) {
+                if (vm.isLoadingPostList == true) {
+                  // 正在加载数据
+                } else {
+                  if (vm.noMoreOldPost == false) {
+                    vm.setIsLoadingPostList(true);
+                    vm.getPostList(requireNewest: false).then((_) {
+                      vm.setIsLoadingPostList(false);
+                    });
+                  }
+                }
+              }
+              return false;
+            },
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const _RecommendedSubjectList(),
+                  const _HotSubjectListHeader(),
+                  const _HotSubjectList(),
+                  ListView.separated(
+                    separatorBuilder: (ctx, idx) => const SizedBox(height: 4),
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: vm.posts.length + 1,
+                    itemBuilder: (ctx, idx) {
+                      if (idx == vm.posts.length) {
+                        return NoMore();
+                      }
+                      return PostItem(post: vm.posts[idx]);
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         );

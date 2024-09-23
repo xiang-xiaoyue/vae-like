@@ -65,12 +65,14 @@ class Api {
     return ListResp.toListResp(res.data);
   }
 
+  //todo：这段查询条件过于复杂，需要拆分
   // 查询指定用户创建的post列表，需要：UserID>0,但IsFollowing为false,
   // 查询指定用户关注的话题下post列表，必要参数：IsFollowing为true,UserID
   // 查询指定话题下post列表，必要参数：SubjectID>0
   // 以上都略过，若PostType为空，则查询全部post列表，
   // 若PostType不为空，则根据类型返回post列表
   // 注意：PostSubType必须为""或是合法类型值
+  // currentPostId用于查询最新列表，可与其他参数搭配使用
   Future<ListResp> getPostList({
     int uid = 0,
     String postType = "",
@@ -79,6 +81,7 @@ class Api {
     bool isFollowing = false,
     int pageIndex = 0,
     int pageSize = 0,
+    int currentPostId = 0,
   }) async {
     var res = await DioInstance.instance().get(path: "post-list", params: {
       "page_index": pageIndex,
@@ -88,6 +91,7 @@ class Api {
       "post_sub_type": postSubType,
       "subject_id": subjectID,
       "is_following": isFollowing,
+      "current_post_id": currentPostId,
     });
     return ListResp.toListResp(res.data);
   }

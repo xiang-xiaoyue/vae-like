@@ -7,6 +7,7 @@ import 'package:trump/components/index.dart';
 import 'package:trump/components/input.dart';
 import 'package:trump/pages/mine/vm.dart';
 import 'package:trump/service/save.dart';
+import 'package:trump/vm.dart';
 
 class UpdatePwdPage extends StatelessWidget {
   const UpdatePwdPage({super.key});
@@ -78,8 +79,8 @@ class _BodyState extends State<_Body> {
           child:
               InputFieldFilledWhite(controller: controller, hintText: "输入新密码"),
         ),
-        Consumer<CurrentUserViewModel>(
-          builder: (context, vm, child) {
+        Consumer2<CurrentUserViewModel, GlobalViewModel>(
+          builder: (context, vm, global, child) {
             return TrumpButton(
               text: "确认修改",
               textColor: Colors.white,
@@ -95,7 +96,8 @@ class _BodyState extends State<_Body> {
                         ScaffoldMessenger.of(context)
                             .showSnackBar(const SnackBar(content: Text("成功")));
                         SaveService.writeString(newToken).then((v) {
-                          context.pushNamed("mine");
+                          global.setCurIdx(4);
+                          context.pushNamed("index");
                         });
                       });
                     },

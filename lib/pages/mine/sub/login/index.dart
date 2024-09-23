@@ -5,6 +5,7 @@ import 'package:trump/components/buttons/button.dart';
 import 'package:trump/components/toast.dart';
 import 'package:trump/pages/mine/component/text_field.dart';
 import 'package:trump/pages/mine/vm.dart';
+import 'package:trump/vm.dart';
 
 // 登录页面
 class LoginPage extends StatelessWidget {
@@ -47,31 +48,34 @@ class LoginPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: 10),
-                  TrumpButton(
-                    text: "登录",
-                    textColor: Colors.white,
-                    backgroundColor: (vm.loginEmail.isNotEmpty &&
-                            vm.loginPassword.isNotEmpty)
-                        ? Colors.blue
-                        : Colors.grey.shade500,
-                    borderStyle: BorderStyle.none,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    onTap: () {
-                      if (vm.loginPassword.isEmpty ||
-                          vm.loginPassword.isEmpty) {
-                        context.showToast("信息填写完整后才可登录");
-                        return;
-                      }
-                      vm.login().then((res) {
-                        if (res == true) {
-                          context.showToast("登录成功");
-                          context.pushNamed("mine");
-                        } else {
-                          context.showToast("登录失败");
+                  Consumer<GlobalViewModel>(builder: (context, global, _) {
+                    return TrumpButton(
+                      text: "登录",
+                      textColor: Colors.white,
+                      backgroundColor: (vm.loginEmail.isNotEmpty &&
+                              vm.loginPassword.isNotEmpty)
+                          ? Colors.blue
+                          : Colors.grey.shade500,
+                      borderStyle: BorderStyle.none,
+                      padding: const EdgeInsets.symmetric(vertical: 16),
+                      onTap: () {
+                        if (vm.loginPassword.isEmpty ||
+                            vm.loginPassword.isEmpty) {
+                          context.showToast("信息填写完整后才可登录");
+                          return;
                         }
-                      });
-                    },
-                  ),
+                        vm.login().then((res) {
+                          if (res == true) {
+                            context.showToast("登录成功");
+                            global.setCurIdx(4);
+                            context.pushNamed("index");
+                          } else {
+                            context.showToast("登录失败");
+                          }
+                        });
+                      },
+                    );
+                  }),
                   Row(
                     children: [
                       TextButton(

@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/app_bar.dart';
 import 'package:trump/pages/mine/vm.dart';
+import 'package:trump/vm.dart';
 
 // 个人设置界面
 class MineSettingsPage extends StatelessWidget {
@@ -70,12 +71,14 @@ class _LogoutBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CurrentUserViewModel>(builder: (context, vm, child) {
+    return Consumer2<CurrentUserViewModel, GlobalViewModel>(
+        builder: (context, vm, global, child) {
       return GestureDetector(
         onTap: () {
           vm.logout().then((success) {
             if (success) {
-              context.pushNamed("home");
+              global.setCurIdx(0);
+              context.pushNamed("index");
               return;
             } else {
               // todo:弹窗提示退出失败

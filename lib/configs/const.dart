@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class TrumpCommon {
-  //static const String baseURL = "http://192.168.1.134:3000/";
-  static const String baseURL = "https://api0.toysns.site/";
+  static const String baseURL = "http://192.168.1.134:3000/";
+  //static const String baseURL = "https://api0.toysns.site/";
 
   static String avatar =
       "https://images.unsplash.com/photo-1580128660010-fd027e1e587a";
