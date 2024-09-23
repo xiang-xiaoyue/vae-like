@@ -303,9 +303,12 @@ class Api {
 
   // 获取指定角色创建的最新内容（帖子和评论）
   //todo: 如果一篇内容也没有会怎么样？
-  Future<Content> getLatestContent(String roleName) async {
+  Future<Content?> getLatestContent(String roleName) async {
     var res = await DioInstance.instance()
         .get(path: "latest-content-by-role", params: {"role_name": roleName});
+    if (res.data.data == null) {
+      return null;
+    }
     return Content.fromJson(res.data.data);
   }
 

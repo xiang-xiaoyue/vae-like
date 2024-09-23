@@ -24,7 +24,7 @@ class HomePage extends StatelessWidget {
               _HomePageAppBar(),
               _HomePic(),
               _MenuTab(), // 行程、图集、作品、视频、活动
-              _LatestTrend(), //todo: 站长发表的最新post/comment,点击查看详情
+              _LatestTrend(), //hot-user发表的最新post/comment,点击查看详情
               _TrendListHeader(), // 官方动态头部
               _TrendList(), // 官方动态列表
             ],
@@ -177,7 +177,7 @@ class _MenuTabItem extends StatelessWidget {
   }
 }
 
-// title-role发布的最新内容（post或comment)
+// hot-role发布的最新内容（post或comment)
 class _LatestTrend extends StatefulWidget {
   const _LatestTrend();
 
