@@ -1,0 +1,9 @@
+export './sub/blacklist/index.dart';
+export './sub/preference/index.dart';
+export './sub/privacy/index.dart';
+export './sub/secure/index.dart';
+export './sub/about_us/index.dart';
+export './sub/bind_phone/index.dart';
+export './sub/secure/update_pwd/index.dart';
+export './sub/bind_email/index.dart';
+export './index.dart';
