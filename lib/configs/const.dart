@@ -37,6 +37,17 @@ class Constants {
   static const String postTypeTrends = "trends";
   static const String postTypeGoods = "goods";
 
+  // 点击发布按钮时，选择发布项
+  static const String publishOptionTextAndImages =
+      postSubTypeTextWithImages; // 图文,没标题
+  static const String publishOptionShortText = postSubTypeShortText; // 短文字，没标题
+  static const String publishOptionLongText = postSubTypeLongText; // 长文字
+  static const String publishOptionVoice = postSubTypeVoice; // 语音
+  static const String publishOptionVideo = postSubTypeVideo; // 视频
+  static const String publishOptionVote = postSubTypeVote; // 投票
+  static const String publishOptionDraft = "draft"; // 草稿箱
+  static const String publishOptionSubject = "subject"; // 申请话题
+
   static const String postSubTypeVote = "vote";
   static const String postSubTypeTextWithImages = "text-images";
   static const String postSubTypeShortText = "short-text";
@@ -69,16 +80,6 @@ class Constants {
       TextStyle(fontSize: 18, fontWeight: FontWeight.w500);
   static TextStyle secondTitleStyle =
       TextStyle(color: Colors.grey.shade700, fontSize: 14);
-
-  // 点击发布按钮时，选择发布项
-  static const String publishOptionTextAndImages = "text-images"; // 图文,没标题
-  static const String publishOptionShortText = "short-text"; // 短文字，没标题
-  static const String publishOptionLongText = "long-text"; // 长文字
-  static const String publishOptionVoice = "voice"; // 语音
-  static const String publishOptionVideo = "video"; // 视频
-  static const String publishOptionDraft = "draft"; // 草稿箱
-  static const String publishOptionVote = "vote"; // 投票
-  static const String publishOptionSubject = "subject"; // 申请话题
 
   // 查询指定用户收藏的post时，type值
   static const String CollectingTypeActivity = "activity";

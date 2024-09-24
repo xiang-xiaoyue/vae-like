@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:trump/configs/const.dart';
 import 'package:trump/models/request/new_post.dart';
 import 'package:trump/models/resp/index.dart';
 import 'package:trump/models/resp/models/subject.dart';
@@ -11,19 +12,39 @@ import 'package:trump/util/color.dart';
 //note: 在NewPost里，options是const[],atUsrList也是const[],所以无法直接add,remove,
 // 这里另外声明列表，最后赋值过去
 class CreatePostViewModel with ChangeNotifier {
+  CreatePostViewModel(String subType, Post? currentEdittingThread) {
+    print("当前帖子：${currentEdittingThread?.content}");
+    if (currentEdittingThread != null) {
+      newPostFromPost(currentEdittingThread);
+    } else {
+      np.type = Constants.postTypeThread;
+      np.subType = subType;
+    }
+    notifyListeners();
+  }
+
+  //todo: getPostId有可能得到null
+
+  // 从草稿箱跳来之前，当前编辑的帖子信息保存在了currentUserViewModel中
+  void newPostFromPost(Post p) {
+    np.fromPost(p);
+    // 强行转成“帖子”
+    np.type = Constants.postTypeThread;
+    print("np信息：${np.id}");
+    notifyListeners();
+  }
+
   NewPost np = NewPost();
-  List<String> options = ['', ''];
   List<User> atUserList = [];
   int voiceDurationSeconds = 0;
   int voicePositionSeconds = 0;
-  Color selectedColor = Colors.white; // 如果是短文，有背景色
 
   void notify() {
     notifyListeners();
   }
 
-  void setSelectedColor(Color color) {
-    selectedColor = color;
+  void setShortTextBackgroundColor(Color color) {
+    np.color = color2String(color);
     notifyListeners();
   }
 
@@ -46,25 +67,23 @@ class CreatePostViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  List<String> imgs = [];
   // 增加图文中的图片
   void addImage(String url) {
-    imgs.add(url);
+    np.imageList?.add(url);
     notifyListeners();
   }
 
   // 从图片列表中移除
   void removeImage(String url) {
-    imgs.remove(url);
+    np.imageList?.remove(url);
     notifyListeners();
   }
 
   // 发布帖子
-  Future<int> publish() async {
-    np.voteOptionList = options;
+  Future<int> publish({String status = "normal"}) async {
     np.atUserList = atUserList.map((i) => i.id.toString()).toList();
-    np.color = toColor(selectedColor);
-    np.imageList = imgs;
+    np.status = status;
+    print("这是保存草稿时的选项：${np.voteOptionList.length}");
     Post post = await Api.instance.createPost(np);
     notifyListeners();
     return post.id;
@@ -72,7 +91,7 @@ class CreatePostViewModel with ChangeNotifier {
 
   // 增加投票的选项
   addVoteOption() {
-    options.add('');
+    np.voteOptionList.add('');
     notifyListeners();
   }
 
@@ -90,7 +109,6 @@ class CreatePostViewModel with ChangeNotifier {
     if (hasAted == false) {
       atUserList.add(user);
     }
-    print("选中的@人：${atUserList.length}");
     notifyListeners();
   }
 
@@ -102,14 +120,14 @@ class CreatePostViewModel with ChangeNotifier {
 
   // 减少投票的选项
   removeVoteOption(String option) {
-    options.remove(option);
+    np.voteOptionList.remove(option);
     notifyListeners();
   }
 
   // 修改选项投票选项内容
   updateVoteOption(String oldValue, String newValue) {
-    int index = options.indexOf(oldValue);
-    options[index] = newValue;
+    int index = np.voteOptionList.indexOf(oldValue);
+    np.voteOptionList[index] = newValue;
     notifyListeners();
   }
 }

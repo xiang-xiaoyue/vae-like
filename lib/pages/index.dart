@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/components/toast.dart';
@@ -39,7 +40,8 @@ class _IndexPageState extends State<IndexPage> {
             : null,
         floatingActionButton: FloatingActionButton(
           //onPressed: () => context.pushNamed("for_test"),
-          onPressed: () => context.showToast("hello"),
+          //onPressed: () => context.showToast("hello"),
+          onPressed: () => context.pushNamed("draft"),
           child: Text("toTest"),
         ),
         body: Consumer<GlobalViewModel>(builder: (context, global, _) {

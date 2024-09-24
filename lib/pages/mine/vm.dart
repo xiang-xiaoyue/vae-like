@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:trump/models/resp/index.dart';
 import 'package:trump/models/resp/models/subject.dart';
 import 'package:trump/models/resp/models/user.dart';
 import 'package:trump/service/api.dart';
@@ -123,5 +124,14 @@ class CurrentUserViewModel with ChangeNotifier {
     String str = await Api.instance.updateUserInfo(user!);
     notifyListeners();
     return str;
+  }
+
+  // 当前编辑的帖子信息（用于从草稿箱跳转到编辑页面）
+  // 一是用起来方便，二是减少网络请求
+  Post? currentEdittingThread;
+  Future saveCurrentEdittingThread(Post? p) async {
+    print("清空了帖子信息");
+    currentEdittingThread = p;
+    notifyListeners();
   }
 }

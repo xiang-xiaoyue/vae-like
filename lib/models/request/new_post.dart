@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 
+import 'package:trump/models/resp/models/post.dart';
+
 part 'new_post.g.dart';
 
 NewPost newPostFromJson(String str) => NewPost.fromJson(json.decode(str));
@@ -10,9 +12,10 @@ String newPostToJson(NewPost data) => json.encode(data.toJson());
 class NewPost {
   @JsonKey(name: "title")
   String title;
-  //VoteOptionList []string `json:"vote_option_list"`
+  @JsonKey(name: "status")
+  String status;
   @JsonKey(name: "vote_option_list")
-  List<String?> voteOptionList;
+  List<String> voteOptionList;
   @JsonKey(name: "color")
   String color;
   @JsonKey(name: "content")
@@ -24,7 +27,7 @@ class NewPost {
   @JsonKey(name: "end_time")
   int endTime;
   @JsonKey(name: "image_list")
-  List<String> imageList;
+  List<String>? imageList;
   @JsonKey(name: "poster_url")
   String posterUrl;
   @JsonKey(name: "video_url")
@@ -39,17 +42,25 @@ class NewPost {
   String type;
   @JsonKey(name: "sub_type")
   String subType;
+  @JsonKey(name: "id")
+  int id;
 
   NewPost({
     this.title = '',
-    this.voteOptionList = const [],
+    this.id = 0,
+    this.status = "normal",
+    //this.voteOptionList=['',''],
     //todo:  this.voteOptionList, 对应的换成：List<String>? voteOptionList;,可调用add方法
+    // 如果要初始两个空的，就在class():冒号后面初始化，如下:
+    // 这样在用的时候就不用if(vm.np.voteOptionList!=null) 了
     this.color = '0xffffffff',
     this.content = '',
     this.subjectId = 0,
     this.startTime = 0,
     this.endTime = 0,
-    this.imageList = const [],
+    //note: const []在上面对应的是List<String> imageList,这样用了const之后就不能用add方法。
+    //this.imageList = const [],
+    this.imageList,
     this.posterUrl = '',
     this.videoUrl = '',
     this.voiceUrl = '',
@@ -57,8 +68,30 @@ class NewPost {
     this.atUserList = const [],
     this.type = '',
     this.subType = '',
-  });
+  }) : voteOptionList = ['', ''];
   factory NewPost.fromJson(Map<String, dynamic> json) =>
       _$NewPostFromJson(json);
   Map<String, dynamic> toJson() => _$NewPostToJson(this);
+
+  void fromPost(Post p) {
+    id = p.id;
+    title = p.title;
+    status = p.status;
+    voteOptionList = p.voteResult != null
+        ? p.voteResult!.map((i) => i.content).toList()
+        : [];
+    color = p.color;
+    content = p.content;
+    subjectId = p.subject.id;
+    startTime = p.startTime;
+    endTime = p.endTime;
+    imageList = p.imageList;
+    posterUrl = p.posterUrl;
+    videoUrl = p.videoUrl;
+    voiceUrl = p.voiceUrl;
+    musicUrl = p.musicUrl;
+    atUserList = p.atUserList.map((i) => i.toString()).toList();
+    type = p.type;
+    subType = p.subType;
+  }
 }

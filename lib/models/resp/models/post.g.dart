@@ -8,6 +8,7 @@ part of 'post.dart';
 
 Post _$PostFromJson(Map<String, dynamic> json) => Post(
       id: (json['id'] as num).toInt(),
+      status: json['status'] as String,
       currencyType: json['currency_type'] as String,
       currencyCount: (json['currency_count'] as num).toInt(),
       voteResult: (json['vote_result'] as List<dynamic>?)
@@ -47,6 +48,7 @@ Post _$PostFromJson(Map<String, dynamic> json) => Post(
 
 Map<String, dynamic> _$PostToJson(Post instance) => <String, dynamic>{
       'id': instance.id,
+      'status': instance.status,
       'currency_type': instance.currencyType,
       'currency_count': instance.currencyCount,
       'vote_result': instance.voteResult,

@@ -1,3 +1,4 @@
+import 'package:dio/io.dart';
 import 'package:trump/service/interceptors.dart';
 import 'package:dio/dio.dart';
 
@@ -37,6 +38,13 @@ class DioInstance {
     //_dio.interceptors.add(RequestInterceptor());
     _dio.interceptors.add(PrintLogInterceptor());
     _dio.interceptors.add(ResponseInterceptor());
+
+    (_dio.httpClientAdapter as IOHttpClientAdapter).onHttpClientCreate =
+        (client) {
+      client.badCertificateCallback = (cert, host, port) {
+        return true;
+      };
+    };
   }
 
   //  todo:在所有的请求前加上"X-Token"，本应当在拦截器里完成，但是在拦截器里加自定义请求头无效，所以在下面的

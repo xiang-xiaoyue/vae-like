@@ -52,6 +52,8 @@ class Api {
   }
   // 修改post,可更新ishot属性
 
+  // 保存草稿
+
   // 给自己的帖子“加热”
   Future<bool> toHotPost(int id) async {
     var res = await DioInstance.instance()
@@ -81,11 +83,13 @@ class Api {
     bool isFollowing = false,
     int pageIndex = 0,
     int pageSize = 0,
+    String status = '',
     int currentPostId = 0,
   }) async {
     var res = await DioInstance.instance().get(path: "post-list", params: {
       "page_index": pageIndex,
       "page_size": pageSize,
+      "status": status,
       "user_id": uid,
       "post_type": postType,
       "post_sub_type": postSubType,

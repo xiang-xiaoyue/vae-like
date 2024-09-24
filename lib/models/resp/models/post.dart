@@ -18,6 +18,8 @@ String postToJson(Post data) => json.encode(data.toJson());
 class Post {
   @JsonKey(name: "id")
   int id;
+  @JsonKey(name: "status")
+  String status;
   @JsonKey(name: "currency_type")
   String currencyType;
   @JsonKey(name: "currency_count")
@@ -79,6 +81,7 @@ class Post {
 
   Post({
     required this.id,
+    required this.status,
     required this.currencyType,
     required this.currencyCount,
     this.voteResult,

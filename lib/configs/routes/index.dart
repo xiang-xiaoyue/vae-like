@@ -110,6 +110,7 @@ List<GoRoute> routes = [
     builder: (context, state) => PublishPage(
       type:
           state.uri.queryParameters["type"] ?? Constants.publishOptionShortText,
+      id: state.uri.queryParameters["id"] ?? "0",
     ),
   ),
   GoRoute(

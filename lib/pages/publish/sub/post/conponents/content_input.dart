@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:trump/pages/publish/sub/post/vm.dart';
 
 // 创建post时的内容输入框
 class NewPostTextarea extends StatefulWidget {
   final Function onChange;
   final bool hideCounter;
+  final CreatePostViewModel? vm;
   const NewPostTextarea({
     super.key,
     required this.onChange,
     this.hideCounter = false,
+    this.vm,
   });
 
   @override
@@ -15,12 +18,11 @@ class NewPostTextarea extends StatefulWidget {
 }
 
 class _NewPostTextareaState extends State<NewPostTextarea> {
-  //late CustomTextEditingController controller;
-  late TextEditingController controller;
+  TextEditingController controller = TextEditingController();
   @override
   void initState() {
     super.initState();
-    controller = TextEditingController();
+    controller.text = widget.vm?.np.content ?? '';
   }
 
   @override

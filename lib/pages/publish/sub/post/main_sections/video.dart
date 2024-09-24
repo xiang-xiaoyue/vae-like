@@ -6,6 +6,7 @@ import 'package:trump/pages/publish/components/upload_bar.dart';
 import 'package:trump/pages/publish/components/upload_pic.dart';
 import 'package:trump/pages/publish/sub/post/conponents/content_input.dart';
 import 'package:trump/pages/publish/sub/post/vm.dart';
+import 'package:trump/util/util.dart';
 
 // 只能上传一个视频
 class NewPostVideoAndTextMain extends StatefulWidget {
@@ -32,11 +33,12 @@ class _NewPostVideoAndTextMainState extends State<NewPostVideoAndTextMain> {
             children: [
               NewPostTextarea(onChange: (v) => vm.np.content = v.trim()),
               Text("等级达到10级才可上传视频"),
-              vm.np.videoUrl != ""
+              (vm.np.videoUrl != "" && vm.np.posterUrl != "")
                   ? UserAvatar(
                       url: vm.np.posterUrl,
                       size: 112,
                       radius: 0,
+                      onTap: () {},
                     )
                   : SelectAndUploadBar(
                       setFileUrl: (fileUrl) {

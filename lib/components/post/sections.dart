@@ -138,7 +138,7 @@ class PostMusicSection extends StatelessWidget {
       alignment: Alignment.centerLeft,
       decoration: BoxDecoration(
         color: Colors.pink.withAlpha(80),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

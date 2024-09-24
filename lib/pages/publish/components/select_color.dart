@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/pages/publish/sub/post/vm.dart';
-import 'package:trump/util/color.dart';
 
 class PublishPostSelectColor extends StatelessWidget {
   const PublishPostSelectColor({super.key, required this.colors});
@@ -17,7 +16,7 @@ class PublishPostSelectColor extends StatelessWidget {
         children: colors.map((item) {
           return Consumer<CreatePostViewModel>(builder: (context, vm, child) {
             return GestureDetector(
-              onTap: () => vm.setSelectedColor(item),
+              onTap: () => vm.setShortTextBackgroundColor(item),
               child: WordsBackgroundColorItem(color: item),
             );
           });

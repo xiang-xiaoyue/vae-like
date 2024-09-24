@@ -135,18 +135,19 @@ class _AppBar extends StatelessWidget {
                       context.pushReplacementNamed("login");
                       return;
                     } else if (value == Constants.publishOptionDraft) {
-                      // 去草稿箱
-                      //context.pushNamed("draft");
-                      context.showToast("现在还没有实现此功能");
+                      context.pushNamed("draft");
                       return;
                     } else if (value == Constants.publishOptionSubject) {
                       // 去申请话题
                       context.pushNamed("subject_apply");
                       return;
                     } else if (value == Constants.publishOptionVideo) {
-                      if ((cur.user?.level ?? 0) < 10) {
+                      if ((cur.user?.level ?? 0) < 0) {
                         context.showToast("等级不够，不能上传视频，请等级达到10级再来");
                         return;
+                      } else {
+                        context.pushNamed("publish",
+                            queryParameters: {"type": value});
                       }
                     }
                     //todo: 长文、图文等类型暂时不能发布
@@ -177,7 +178,7 @@ List<PopupMenuItem<String>> buildItems() {
     Constants.publishOptionLongText: "长文(待做)",
     Constants.publishOptionVoice: "语音",
     Constants.publishOptionVideo: "视频",
-    Constants.publishOptionDraft: "草稿箱(待做)",
+    Constants.publishOptionDraft: "草稿箱",
     Constants.publishOptionVote: "投票",
     Constants.publishOptionSubject: "申请话题",
   };

@@ -16,22 +16,25 @@ class NewPostVoteMain extends StatelessWidget {
         child: Consumer<CreatePostViewModel>(builder: (context, vm, child) {
           return Column(
             children: [
-              PostTitleInput(onChange: (v) => vm.np.title = v.trim()),
+              PostTitleInput(onChange: (v) => vm.np.title = v.trim(), vm: vm),
               const Divider(thickness: 0.2, color: Colors.grey),
-              NewPostTextarea(onChange: (v) => vm.np.content = v.trim()),
+              NewPostTextarea(
+                  onChange: (v) => vm.np.content = v.trim(), vm: vm),
               Container(
                 padding: const EdgeInsets.all(8),
-                margin: const EdgeInsets.all(8),
+                //margin: const EdgeInsets.all(8),
+                margin: EdgeInsets.fromLTRB(8, 8, 8, 80),
                 decoration: BoxDecoration(
                   color: Colors.blueGrey.shade50,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
                   children: [
                     const Text("添加投票项目(每项18字以内)"),
-                    ...vm.options.map((i) {
-                      vm.options.indexOf(i);
+                    ...vm.np.voteOptionList.map((i) {
+                      vm.np.voteOptionList.indexOf(i);
                       return _NewVoteOptionItem(
                           text: i,
                           removeOption: () => vm.removeVoteOption(i),
