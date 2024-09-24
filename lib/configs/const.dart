@@ -12,6 +12,9 @@ class TrumpCommon {
   static TextStyle greyText =
       TextStyle(color: Colors.grey.shade600, fontSize: 12);
   static double appBarTitleSpacing = 0;
+
+  static int pageIndex = 1;
+  static int pageSize = 5;
 }
 
 class TrumpSize {

@@ -33,7 +33,9 @@ class MineCollectionViewModel with ChangeNotifier {
   List<Post> threads = [];
 
   Future getCollectingPostListWithType(String t) async {
-    ListResp listResp = await Api.instance.getCollectingPostList(type: t);
+    ListResp listResp = await Api.instance.getCollectingPostList(
+        type: t,
+        isFollowing: t == Constants.CollectingTypeInSubject ? true : false);
     switch (t) {
       case Constants.CollectingTypeTrends:
         trends.clear();

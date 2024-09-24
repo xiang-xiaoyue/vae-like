@@ -14,7 +14,7 @@ class HotUserContentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CommonAppBar(title: "hot-user来了"),
+      appBar: const CommonAppBar(title: "嘉宾动态"),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
         child: const _List(),

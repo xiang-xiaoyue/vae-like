@@ -11,8 +11,8 @@ import 'package:trump/service/api.dart';
 // 话题广场页面
 class MaidanPageViewModel with ChangeNotifier {
   MaidanPageViewModel() {
-    postPageIndex = 1;
-    postPageSize = 3;
+    postPageIndex = TrumpCommon.pageIndex;
+    postPageSize = TrumpCommon.pageSize;
     getRecommendedSubjectList();
     getSubjectList();
     getPostList();
@@ -25,8 +25,8 @@ class MaidanPageViewModel with ChangeNotifier {
   List<Subject> recommendedSubjects = [];
 
   List<Post> posts = [];
-  int postPageIndex = 1;
-  int postPageSize = 3;
+  int postPageIndex = TrumpCommon.pageIndex;
+  int postPageSize = TrumpCommon.pageSize;
   int currentPostId = 0; //当前被点击查看详情的post的id
 
   bool isLoadingPostList = false;

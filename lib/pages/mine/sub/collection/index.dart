@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
-import 'package:trump/components/keep_alive_wrapper.dart';
 import 'package:trump/models/resp/models/post.dart';
 import 'package:trump/pages/mine/sub/collection/vm.dart';
 import 'package:trump/pages/notice/export.dart';

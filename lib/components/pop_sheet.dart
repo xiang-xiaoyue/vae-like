@@ -31,10 +31,16 @@ class PopActionSheet extends StatelessWidget {
 class SheetActionItem extends StatelessWidget {
   final String text;
   final VoidCallback? onTap;
+  final BorderRadius? borderRadius;
+  final bool showBottomBorder;
+  final TextStyle textStyle;
   const SheetActionItem({
     super.key,
     this.text = "取消",
     this.onTap,
+    this.borderRadius,
+    this.showBottomBorder = true,
+    this.textStyle = const TextStyle(color: Colors.blue, fontSize: 18),
   });
 
   @override
@@ -43,13 +49,18 @@ class SheetActionItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         alignment: Alignment.center,
-        height: 50,
-        margin: const EdgeInsets.only(bottom: 4, left: 8, right: 8),
+        height: 46,
+        margin: EdgeInsets.symmetric(horizontal: 8),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: borderRadius,
+          border: Border(
+            bottom: BorderSide(
+                width: showBottomBorder == true ? 1 : 0,
+                color: Colors.grey.shade200),
+          ),
         ),
-        child: Text(text),
+        child: Text(text, style: textStyle),
       ),
     );
   }

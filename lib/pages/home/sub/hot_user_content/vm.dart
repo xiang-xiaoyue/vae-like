@@ -11,8 +11,8 @@ class HotUserContentViewModel with ChangeNotifier {
   List<Content> contentList = [];
   int contentCount = 0;
 
-  Future getContentList({int roleId = 6}) async {
-    ListResp listResp = await Api.instance.getContentList(roleId);
+  Future getContentList({String roleName = "hot"}) async {
+    ListResp listResp = await Api.instance.getContentList(roleName);
     contentCount = listResp.count ?? 0;
     listResp.list?.forEach((item) {
       contentList.add(Content.fromJson(item));

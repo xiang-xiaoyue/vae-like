@@ -263,10 +263,17 @@ class Api {
   }
 
   // 查询收藏的post(trends, activity,trip, in-subject)
-  Future<ListResp> getCollectingPostList(
-      {int uid = 0, String type = ""}) async {
-    var res = await DioInstance.instance().get(
-        path: "collecting-post-list", params: {"type": type, "user_id": uid});
+  Future<ListResp> getCollectingPostList({
+    int uid = 0,
+    String type = "",
+    bool isFollowing = false,
+  }) async {
+    var res =
+        await DioInstance.instance().get(path: "collecting-post-list", params: {
+      "type": type,
+      "user_id": uid,
+      "is_following": isFollowing,
+    });
     return ListResp.toListResp(res.data);
   }
 
@@ -317,9 +324,9 @@ class Api {
   }
 
   // 获取指定角色创建的全部内容
-  Future<ListResp> getContentList(int roleId) async {
+  Future<ListResp> getContentList(String roleName) async {
     var res = await DioInstance.instance()
-        .get(path: "list-by-role", params: {"role_id": roleId.toString()});
+        .get(path: "list-by-role", params: {"role_name": roleName});
     return ListResp.toListResp(res.data);
   }
 

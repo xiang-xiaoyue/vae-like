@@ -25,10 +25,12 @@ class _IndexPageState extends State<IndexPage> {
     return Consumer<GlobalViewModel>(builder: (context, global, _) {
       return Scaffold(
         backgroundColor:
-            global.curIdx == 1 ? Colors.grey.shade300 : Colors.white,
+            (global.curIdx == 1 || global.curIdx == 2 || global.curIdx == 4)
+                ? Colors.grey.shade200
+                : Colors.white,
         bottomNavigationBar:
             TrumpBottomNavigatorBar(controller: pageController),
-        appBar: global.curIdx == 1
+        appBar: (global.curIdx == 1)
             ? AppBar(
                 toolbarHeight: 0,
                 backgroundColor: Colors.white,

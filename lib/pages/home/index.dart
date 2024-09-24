@@ -13,20 +13,30 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: ChangeNotifierProvider(
-        create: (context) => HomeViewModel(),
-        child: const CustomScrollView(
-          slivers: [
-            _HomePageAppBar(),
-            _HomePic(),
-            _MenuTab(), // 行程、图集、作品、视频、活动
-            _LatestTrend(), //hot-user发表的最新post/comment,点击查看详情
-            _TrendListHeader(), // 官方动态头部
-            _TrendList(), // 官方动态列表
-          ],
-        ),
-      ),
+    return ChangeNotifierProvider<HomeViewModel>(
+      create: (context) => HomeViewModel(),
+      child: Consumer<HomeViewModel>(builder: (context, vm, _) {
+        return SafeArea(
+          child: NotificationListener<ScrollNotification>(
+            onNotification: (nf) {
+              if (nf.metrics.pixels + 30 >= nf.metrics.maxScrollExtent) {
+                vm.getTrendList();
+              }
+              return false;
+            },
+            child: const CustomScrollView(
+              slivers: [
+                _HomePageAppBar(),
+                _HomePic(),
+                _MenuTab(), // 行程、图集、作品、视频、活动
+                _LatestTrend(), //hot-user发表的最新post/comment,点击查看详情
+                _TrendListHeader(), // 官方动态头部
+                _TrendList(), // 官方动态列表
+              ],
+            ),
+          ),
+        );
+      }),
     );
   }
 }
@@ -43,15 +53,84 @@ class _TrendListHeader extends StatelessWidget {
       delegate: SliverHeaderDelegate(
         maxHeight: 48,
         minHeight: 48,
-        child: Container(
-          decoration: const BoxDecoration(color: Colors.white),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: AppTextAndIcon(
-            left: "官方动态",
-            right: Icons.menu,
-            onTap: () {}, //todo:按分类查询“官方动态”
-          ),
-        ),
+        child: Consumer<HomeViewModel>(builder: (context, vm, _) {
+          return Container(
+            decoration: const BoxDecoration(color: Colors.white),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ChangeNotifierProvider.value(
+              value: vm,
+              child: AppTextAndIcon(
+                left: "官方动态",
+                right: Icons.menu,
+                onTap: () {
+                  showModalBottomSheet<String?>(
+                    elevation: 10,
+                    backgroundColor: Colors.transparent,
+                    isScrollControlled: true,
+                    context: context,
+                    builder: (context) {
+                      return SingleChildScrollView(
+                        padding: EdgeInsets.only(bottom: 4),
+                        child: Column(
+                          children: [
+                            SheetActionItem(
+                              text: "全部",
+                              onTap: () {
+                                context.pop("");
+                              },
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(4)),
+                            ),
+                            SheetActionItem(
+                                text: "新闻",
+                                onTap: () {
+                                  context.pop(Constants.postSubTypeNews);
+                                }),
+                            SheetActionItem(
+                                text: "专访",
+                                onTap: () {
+                                  context.pop(Constants.postSubTypeInterview);
+                                }),
+                            SheetActionItem(
+                                text: "图集",
+                                onTap: () {
+                                  context.pop(Constants.postSubTypeAtlas);
+                                }),
+                            SheetActionItem(
+                                text: "视频",
+                                onTap: () {
+                                  context.pop(Constants.postSubTypeVideo);
+                                }),
+                            SheetActionItem(
+                              text: "MV",
+                              onTap: () {
+                                context.pop(Constants.postSubTypeMV);
+                              },
+                              borderRadius: BorderRadius.vertical(
+                                  bottom: Radius.circular(4)),
+                            ),
+                            SizedBox(height: 4),
+                            SheetActionItem(
+                              text: "取消",
+                              onTap: () {
+                                context.pop(null);
+                              },
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ).then((subType) {
+                    if (subType != null) {
+                      vm.getInitialSubTypeTrendList(subType);
+                    }
+                  });
+                }, //todo:按分类查询“官方动态”
+              ),
+            ),
+          );
+        }),
       ),
     );
   }
@@ -65,6 +144,7 @@ class _HomePageAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SliverAppBar(
       automaticallyImplyLeading: false,
+      scrolledUnderElevation: 0,
       pinned: true,
       toolbarHeight: 42,
       title: Text(
@@ -182,34 +262,24 @@ class _LatestTrend extends StatefulWidget {
 }
 
 class _LatestTrendState extends State<_LatestTrend> {
-  HomeViewModel vm = HomeViewModel();
-  @override
-  void initState() {
-    super.initState();
-    vm.getLatestContent();
-  }
-
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: ChangeNotifierProvider<HomeViewModel>(
-          create: (context) => vm,
-          child: Consumer<HomeViewModel>(builder: (context, vm, child) {
-            return Column(
-              children: [
-                const AppDoubleText(left: "嘉宾来了", right: "更多"),
-                const SizedBox(height: 15),
-                vm.latestContent == null
-                    ? const SizedBox()
-                    : HotUserContentItem(
-                        content: vm.latestContent!), //todo: 右上角需要盖章
-                const SizedBox(height: 10),
-              ],
-            );
-          }),
-        ),
+        child: Consumer<HomeViewModel>(builder: (context, vm, child) {
+          return Column(
+            children: [
+              const AppDoubleText(left: "嘉宾来了", right: "更多"),
+              const SizedBox(height: 15),
+              vm.latestContent == null
+                  ? const SizedBox()
+                  : HotUserContentItem(
+                      content: vm.latestContent!), //todo: 右上角需要盖章
+              const SizedBox(height: 10),
+            ],
+          );
+        }),
       ),
     );
   }
@@ -226,11 +296,18 @@ class _TrendList extends StatelessWidget {
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: vm.trendCount,
+          itemCount: vm.trends.length,
           itemBuilder: (context, index) {
             return _TrendItem(
               post: vm.trends[index],
-              toggleLike: () => vm.toggleLikeTrend(vm.trends[index].id),
+              toggleLike: () {
+                if (vm.isLiking == false) {
+                  vm.isLiking = true;
+                  vm
+                      .toggleLikeTrend(vm.trends[index].id)
+                      .then((_) => vm.isLiking = false);
+                }
+              },
             );
           },
         );
