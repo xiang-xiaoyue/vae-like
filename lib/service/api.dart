@@ -1,8 +1,3 @@
-import 'dart:async';
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:trump/configs/const.dart';
 import 'package:trump/models/request/like.dart';
@@ -657,6 +652,28 @@ class Api {
       "type": type,
       "code": code,
     });
+    return res.data.code == 0;
+  }
+
+  // 获取全部的勋章// 传入user_id获取指定用户的全部勋章
+  Future<ListResp> getAllMedal({int userId = 0}) async {
+    var res = await DioInstance.instance()
+        .get(path: "medal-list", params: {"user_id": userId});
+    return ListResp.toListResp(res.data);
+  }
+
+  // 点击兑换勋章
+  Future<bool> gainMedal({required int medalId}) async {
+    var res = await DioInstance.instance()
+        .post(path: "user-medal", data: {"id": medalId});
+    return res.data.code == 0;
+  }
+
+  // 更新用户与相应勋章的信息（isWearing)
+  Future<bool> updateUserMedal(
+      {required int id, bool isWearing = false}) async {
+    var res = await DioInstance.instance()
+        .put(path: "user-medal", data: {"id": id, "is_wearing": isWearing});
     return res.data.code == 0;
   }
 }

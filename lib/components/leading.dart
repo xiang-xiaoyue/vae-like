@@ -3,7 +3,12 @@ import 'package:go_router/go_router.dart';
 
 class GoBackLeading extends StatelessWidget {
   final Color color;
-  const GoBackLeading({super.key, this.color = Colors.black});
+  final double? iconSize;
+  const GoBackLeading({
+    super.key,
+    this.color = Colors.black,
+    this.iconSize,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +16,11 @@ class GoBackLeading extends StatelessWidget {
       onTap: () {
         context.pop();
       },
-      child: Icon(Icons.chevron_left_sharp, color: color),
+      child: Icon(
+        Icons.chevron_left_sharp,
+        color: color,
+        size: iconSize,
+      ),
     );
   }
 }
