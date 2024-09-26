@@ -18,6 +18,7 @@ class AllFollowingSubjectPage extends StatelessWidget {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
       ),
+      // todo: 这种顶部两个tab切换，最左边有个返回箭头的，现在都用stack与positioned搭配，不方便。需要优化
       body: ChangeNotifierProvider<FollowingPageViewModel>(
         create: (context) => FollowingPageViewModel(),
         child: Consumer<FollowingPageViewModel>(builder: (context, vm, _) {

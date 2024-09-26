@@ -146,9 +146,19 @@ class _MenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.pushNamed(pathName, queryParameters: queryParameters);
+    return Consumer<DiscoverViewModel>(
+      builder: (context, vm, child) {
+        return GestureDetector(
+          onTap: () {
+            context
+                .pushNamed(pathName, queryParameters: queryParameters)
+                .then((_) {
+              vm.getTaskProgress();
+              vm.getCheckinStatus();
+            });
+          },
+          child: child,
+        );
       },
       child: Container(
         alignment: Alignment.centerLeft,
