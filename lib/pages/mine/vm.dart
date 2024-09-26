@@ -79,6 +79,7 @@ class CurrentUserViewModel with ChangeNotifier {
       await SaveService.writeString("");
       isLoggedIn = false;
       user = null;
+      notifyListeners();
       return true;
     }
     notifyListeners();

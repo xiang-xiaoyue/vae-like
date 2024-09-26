@@ -125,14 +125,9 @@ class _AppBar extends StatelessWidget {
                   itemBuilder: (context) => buildItems(),
                   child: const Icon(Icons.add_circle_outline_rounded),
                   onSelected: (value) {
-                    // authGuard().then((isLoggedIn) {
-                    //   if (isLoggedIn == false) {
-                    //     context.pushReplacementNamed("login");
-                    //     return;
-                    //   }
-                    // });
                     if (cur.isLoggedIn == false) {
-                      context.pushReplacementNamed("login");
+                      //context.pushReplacementNamed("login");
+                      context.pushNamed("login");
                       return;
                     } else if (value == Constants.publishOptionDraft) {
                       context.pushNamed("draft");

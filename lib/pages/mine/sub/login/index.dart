@@ -67,8 +67,7 @@ class LoginPage extends StatelessWidget {
                         vm.login().then((res) {
                           if (res == true) {
                             context.showToast("登录成功");
-                            global.setCurIdx(4);
-                            context.pushNamed("index");
+                            context.pop();
                           } else {
                             context.showToast("登录失败");
                           }

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/app_bar.dart';
+import 'package:trump/components/toast.dart';
 import 'package:trump/pages/mine/vm.dart';
+import 'package:trump/service/save.dart';
 import 'package:trump/vm.dart';
 
 // 个人设置界面
@@ -77,11 +79,12 @@ class _LogoutBtn extends StatelessWidget {
         onTap: () {
           vm.logout().then((success) {
             if (success) {
-              global.setCurIdx(0);
-              context.pushNamed("index");
+              // global.setCurIdx(0);
+              // context.pushNamed("index");
+              context.pop();
               return;
             } else {
-              // todo:弹窗提示退出失败
+              context.showToast("退出失败");
             }
           });
         },
