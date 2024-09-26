@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/pages/notice/components/go_back_leading.dart';
 import 'package:trump/pages/search/components/search_page_subject_item.dart';
-import 'package:trump/pages/subjects/sub/following/sub/following_subject/vm.dart';
+import 'package:trump/pages/subjects/sub/following/vm.dart';
 
 // 所有关注的话题
 class AllFollowingSubjectPage extends StatelessWidget {
@@ -18,15 +18,17 @@ class AllFollowingSubjectPage extends StatelessWidget {
         backgroundColor: Colors.white,
         automaticallyImplyLeading: false,
       ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            ChangeNotifierProvider<AllFollowingSubjectViewModel>(
-                create: (context) => AllFollowingSubjectViewModel(),
-                child: const Positioned(child: _Page())),
-            const MsgGoBackLeading(),
-          ],
-        ),
+      body: ChangeNotifierProvider<FollowingPageViewModel>(
+        create: (context) => FollowingPageViewModel(),
+        child: Consumer<FollowingPageViewModel>(builder: (context, vm, _) {
+          return Stack(
+            children: [
+              ChangeNotifierProvider<FollowingPageViewModel>.value(
+                  value: vm, child: Positioned(child: _Page())),
+              const MsgGoBackLeading(),
+            ],
+          );
+        }),
       ),
     );
   }
@@ -54,18 +56,17 @@ class _FollowingSubjectList extends StatefulWidget {
 class _FollowingSubjectListState extends State<_FollowingSubjectList> {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AllFollowingSubjectViewModel>(
-        builder: (context, vm, child) {
+    return Consumer<FollowingPageViewModel>(builder: (context, vm, child) {
       return RefreshIndicator(
         onRefresh: () async {
-          vm.getList();
+          await vm.getFollowingSubjectList();
           setState(() {});
         },
         displacement: 20,
         color: Colors.orange,
         backgroundColor: Colors.white,
         child: ListView.builder(
-          itemCount: vm.count,
+          itemCount: vm.subjects.length,
           itemBuilder: (context, index) {
             return SearchSubjectItemWithHotValue(subject: vm.subjects[index]);
           },
@@ -92,15 +93,15 @@ class _PageState extends State<_Page> {
       child: Column(
         children: [
           const TwoTabAppBar(leftText: "关注的话题", rightText: "关注的城市"),
-          // Expanded(
-          //   child: const TabBarView(
-          //     physics: NeverScrollableScrollPhysics(),
-          //     children: [
-          //       _FollowingSubjectList(),
-          //       _FollowingCityList(),
-          //     ],
-          //   ),
-          // )
+          Expanded(
+            child: const TabBarView(
+              physics: NeverScrollableScrollPhysics(),
+              children: [
+                _FollowingSubjectList(),
+                _FollowingCityList(),
+              ],
+            ),
+          )
         ],
       ),
     );

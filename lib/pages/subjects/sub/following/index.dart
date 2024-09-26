@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/exports.dart';
+import 'package:trump/components/index.dart';
 import 'package:trump/pages/subjects/components/sample_item.dart';
-import 'package:trump/pages/subjects/sub/following/sub/vm.dart';
+import 'package:trump/pages/subjects/sub/following/vm.dart';
 
 // 顶部展示关注着的话题，下面是关注的话题里面的post列表
 class FollowingTabBarView extends StatefulWidget {
@@ -19,45 +20,41 @@ class _FollowingTabBarViewState extends State<FollowingTabBarView> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<FollowingPageViewModel>(
       create: (context) => FollowingPageViewModel(),
-      child: SingleChildScrollView(
-        child: Consumer<FollowingPageViewModel>(builder: (context, vm, child) {
-          return vm.subjectCount == 0
-              ? Container(
-                  alignment: Alignment.center,
-                  child: Text("没有关注的话题"),
-                )
-              : Column(
-                  children: [
-                    const _FollowingSubjectBar(), //顶部关注着的话题列表，横向滚动
-                    const _Divider(),
-                    ListView.separated(
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 4),
-                      shrinkWrap: true,
-                      itemCount: vm.postCount,
-                      itemBuilder: (c, i) {
-                        return PostItem(post: vm.posts[i]);
-                      },
+      child: Consumer<FollowingPageViewModel>(builder: (context, vm, child) {
+        return vm.subjectCount == 0
+            ? Container(
+                alignment: Alignment.center,
+                child: Text("没有关注的话题"),
+              )
+            : RefreshAndLoadMore(
+                onRefresh: () async {
+                  await vm.getFollowingSubjectList();
+                  await vm.getFollowingPostList(requireNewest: true);
+                },
+                onLoadMore: () async {
+                  await vm.getFollowingPostList();
+                },
+                child: CustomScrollView(
+                  slivers: [
+                    SliverToBoxAdapter(
+                        child: _FollowingSubjectBar()), //顶部关注着的话题列表，横向滚动
+                    SliverPadding(padding: EdgeInsets.only(bottom: 4)),
+                    SliverToBoxAdapter(
+                      child: ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        separatorBuilder: (context, index) =>
+                            const SizedBox(height: 4),
+                        itemCount: vm.posts.length,
+                        itemBuilder: (c, i) {
+                          return PostItem(post: vm.posts[i]);
+                        },
+                      ),
                     ),
                   ],
-                );
-        }),
-      ),
-    );
-  }
-}
-
-class _Divider extends StatelessWidget {
-  const _Divider();
-
-  @override
-  Widget build(BuildContext context) {
-    return ColoredBox(
-      color: Colors.grey.withAlpha(120),
-      child: const SizedBox(
-        height: 4,
-        width: double.infinity,
-      ),
+                ),
+              );
+      }),
     );
   }
 }
@@ -67,7 +64,8 @@ class _FollowingSubjectBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return Container(
+      color: Colors.white,
       height: 60,
       child: Stack(
         children: [

@@ -33,7 +33,7 @@ class HotPostViewModel with ChangeNotifier {
   Future _loadNewest() async {
     ListResp listResp =
         await Api.instance.getHotPostList(currentPostId: posts[0].id);
-    count = listResp.count ?? 0;
+    count = listResp.count ?? count;
     listResp.list?.forEach((i) {
       posts.insert(0, Post.fromJson(i));
     });
@@ -48,9 +48,12 @@ class HotPostViewModel with ChangeNotifier {
     }
     ListResp listResp = await Api.instance
         .getHotPostList(pageIndex: pageIndex, pageSize: pageSize);
-    count = listResp.count ?? 0;
+    count = listResp.count ?? count;
     if ((listResp.list?.length ?? 0) == 0) {
       hasMore = false;
+    } else {
+      pageIndex++;
+      hasMore = true;
     }
     listResp.list?.forEach((item) {
       posts.add(Post.fromJson(item));

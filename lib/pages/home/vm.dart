@@ -61,8 +61,8 @@ class HomeViewModel with ChangeNotifier {
     ListResp listResp = await Api.instance.getPostList(
       postType: Constants.postTypeTrends,
       postSubType: subType,
-      pageSize: trendsPageSize,
-      pageIndex: trendsPageIndex,
+      // pageSize: trendsPageSize,
+      // pageIndex: trendsPageIndex,
       currentPostId: trends[0].id,
     );
     listResp.list?.forEach((i) {
