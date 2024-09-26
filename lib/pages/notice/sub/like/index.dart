@@ -4,7 +4,7 @@ import 'package:trump/components/index.dart';
 import 'package:trump/pages/mine/vm.dart';
 import 'package:trump/pages/notice/components/go_back_leading.dart';
 import 'package:trump/pages/notice/components/item_card.dart';
-import 'package:trump/pages/notice/sub/like/vm.dart';
+import 'package:trump/pages/notice/vm.dart';
 
 //todo: 来此页面之前，应该判断有无登录，未登录则跳转到登录页面。
 // 其他很多页面同理。
@@ -46,42 +46,29 @@ class _Page extends StatelessWidget {
             child: Consumer<CurrentUserViewModel>(
                 builder: (context, curUser, child) {
               return curUser.user != null
-                  ? ChangeNotifierProvider<LikeNoticeViewModel>(
-                      create: (context) =>
-                          LikeNoticeViewModel(curUser.user!.id),
-                      child: Consumer<LikeNoticeViewModel>(
-                          builder: (context, vm, child) {
-                        return TabBarView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: [
-                            ListView.builder(
-                              padding:
-                                  const EdgeInsets.only(bottom: 32, top: 4),
-                              itemBuilder: (ctx, idx) => NoticeItem(
-                                notice: vm.likeMeList[idx],
-                                callback: () {
-                                  if (curUser.user != null) {
-                                    vm.getList(curUser.user!.id);
-                                  }
-                                },
-                              ),
-                              itemCount: vm.likeMeList.length,
+                  ? Consumer<NoticeIndexViewModel>(
+                      builder: (context, vm, child) {
+                      return TabBarView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          ListView.builder(
+                            padding: const EdgeInsets.only(bottom: 32, top: 4),
+                            itemBuilder: (ctx, idx) => NoticeItem(
+                              notice: vm.likeMeList[idx],
+                              callback: () async => await vm.getLikeList(),
                             ),
-                            ListView.builder(
-                              itemBuilder: (ctx, idx) => NoticeItem(
-                                notice: vm.myLikeList[idx],
-                                callback: () {
-                                  if (curUser.user != null) {
-                                    vm.getList(curUser.user!.id);
-                                  }
-                                },
-                              ),
-                              itemCount: vm.myLikeList.length,
+                            itemCount: vm.likeMeList.length,
+                          ),
+                          ListView.builder(
+                            itemBuilder: (ctx, idx) => NoticeItem(
+                              notice: vm.myLikeList[idx],
+                              callback: () async => await vm.getLikeList(),
                             ),
-                          ],
-                        );
-                      }),
-                    )
+                            itemCount: vm.myLikeList.length,
+                          ),
+                        ],
+                      );
+                    })
                   : const SizedBox();
             }),
           ),

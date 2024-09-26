@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:trump/components/bottom_navigator_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:trump/configs/const.dart';
 import 'package:trump/models/resp/models/group.dart';
+import 'package:trump/pages/notice/vm.dart';
 import 'package:trump/util/util.dart';
 
 // 消息通知页面
@@ -12,29 +14,48 @@ class NoticeIndexPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: SingleChildScrollView(
-        child: Column(
-          children: [
-            AppBar(
-              title: const Text("消息"),
-              automaticallyImplyLeading: false,
-              centerTitle: true,
-              actions: [
-                GestureDetector(
-                  child: const Text("联系人"),
-                  onTap: () {
-                    context.pushNamed("contacts");
-                  },
-                ),
-                const SizedBox(width: 16),
+        child: Consumer<NoticeIndexViewModel>(
+          builder: (context, vm, child) {
+            return Column(
+              children: [
+                if (child != null) child,
+                _NoticeMenuItem(
+                    pathName: "official_notice",
+                    text: "官方消息",
+                    type: Constants.noticeTypeOfficial,
+                    count: vm.officialUnreadCount),
+                _NoticeMenuItem(
+                    pathName: "at_me_notice",
+                    type: Constants.noticeTypeAt,
+                    text: "@我的",
+                    count: vm.atUnreadCount),
+                _NoticeMenuItem(
+                    pathName: "comment_notice",
+                    text: "评论",
+                    type: Constants.noticeTypeComment,
+                    count: vm.commentUnreadCount),
+                _NoticeMenuItem(
+                    pathName: "like_notice",
+                    text: "赞",
+                    type: Constants.noticeTypeLike,
+                    count: vm.likeUnreadCount),
               ],
-            ),
-            const _NoticeMenuItem(
-                pathName: "official_notice", text: "官方消息", count: 2),
-            const _NoticeMenuItem(
-                pathName: "at_me_notice", text: "@我的", count: 3),
-            const _NoticeMenuItem(pathName: "comment_notice", text: "评论"),
-            const _NoticeMenuItem(pathName: "like_notice", text: "赞"),
-          ],
+            );
+          },
+          child: AppBar(
+            title: const Text("消息"),
+            automaticallyImplyLeading: false,
+            centerTitle: true,
+            actions: [
+              GestureDetector(
+                child: const Text("联系人"),
+                onTap: () {
+                  context.pushNamed("contacts");
+                },
+              ),
+              const SizedBox(width: 16),
+            ],
+          ),
         ),
       ),
     );
@@ -45,57 +66,63 @@ class _NoticeMenuItem extends StatelessWidget {
   final String text;
   final int count;
   final String pathName;
+  final String type;
   const _NoticeMenuItem({
     required this.text,
     this.count = 0,
     required this.pathName,
+    required this.type,
   });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        if (pathName != "official_notice" &&
-            pathName != "at_me_notice" &&
-            pathName != "comment_notice" &&
-            pathName != "like_notice" &&
-            pathName != 'group_chat') {
-          _showNoPath(context);
-          return;
-        } else {
-          context.pushNamed(pathName);
-          return;
-        }
-      },
-      child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Badge(
-              backgroundColor: Colors.redAccent,
-              smallSize: count <= 0 ? 0 : 10,
-              isLabelVisible: false,
-              label: count <= 0 ? null : Text("$count"),
-              child: Container(
-                alignment: Alignment.center,
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: Colors.blueAccent.withAlpha(80),
-                  borderRadius: BorderRadius.circular(8),
+    return Consumer<NoticeIndexViewModel>(builder: (context, vm, child) {
+      return GestureDetector(
+        onTap: () {
+          if (pathName != "official_notice" &&
+              pathName != "at_me_notice" &&
+              pathName != "comment_notice" &&
+              pathName != "like_notice" &&
+              pathName != 'group_chat') {
+            _showNoPath(context);
+            return;
+          } else {
+            context.pushNamed(pathName).then((_) {
+              vm.readNotice(type, 0);
+            });
+            return;
+          }
+        },
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Badge(
+                backgroundColor: Colors.redAccent,
+                smallSize: 8,
+                isLabelVisible: count <= 0 ? false : true,
+                label: Text("$count"),
+                child: Container(
+                  alignment: Alignment.center,
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: Colors.blueAccent.withAlpha(80),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: const Icon(Icons.home, color: Colors.blue, size: 30),
                 ),
-                child: const Icon(Icons.home, color: Colors.blue, size: 30),
               ),
-            ),
-            const SizedBox(width: 8),
-            Text(text),
-            const Spacer(),
-            const Icon(Icons.arrow_right_alt, color: Colors.grey),
-          ],
+              const SizedBox(width: 8),
+              Text(text),
+              const Spacer(),
+              const Icon(Icons.arrow_right_alt, color: Colors.grey),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   Future<dynamic> _showNoPath(BuildContext context) {

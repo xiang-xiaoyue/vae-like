@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:trump/configs/const.dart';
 import 'package:trump/configs/routes/index.dart';
 import 'package:trump/pages/mine/vm.dart';
+import 'package:trump/pages/notice/vm.dart';
 import 'package:trump/service/dio_instance.dart';
 import 'package:trump/vm.dart';
 
@@ -32,6 +33,7 @@ void main() {
           create: (_) => CurrentUserViewModel.initProfile(),
         ),
         ChangeNotifierProvider(create: (_) => GlobalViewModel()),
+        ChangeNotifierProvider(create: (_) => NoticeIndexViewModel()),
       ],
       child: const MyApp(),
     ),

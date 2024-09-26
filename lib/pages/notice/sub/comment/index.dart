@@ -4,7 +4,7 @@ import 'package:trump/components/index.dart';
 import 'package:trump/pages/mine/vm.dart';
 import 'package:trump/pages/notice/components/go_back_leading.dart';
 import 'package:trump/pages/notice/components/item_card.dart';
-import 'package:trump/pages/notice/sub/comment/vm.dart';
+import 'package:trump/pages/notice/vm.dart';
 
 class CommentNoticePage extends StatelessWidget {
   const CommentNoticePage({super.key});
@@ -42,31 +42,28 @@ class _Page extends StatelessWidget {
             return curUser.user == null
                 ? SizedBox()
                 : Expanded(
-                    child: ChangeNotifierProvider<CommentNoticeViewModel>(
-                      create: (context) => CommentNoticeViewModel(),
-                      child: Consumer<CommentNoticeViewModel>(
-                          builder: (context, vm, child) {
-                        return TabBarView(
-                          physics: const NeverScrollableScrollPhysics(),
-                          children: [
-                            ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: vm.commentsToMe.length,
-                              itemBuilder: (ctx, idx) {
-                                return NoticeItem(notice: vm.commentsToMe[idx]);
-                              },
-                            ),
-                            ListView.builder(
-                              shrinkWrap: true,
-                              itemCount: vm.myComments.length,
-                              itemBuilder: (ctx, idx) {
-                                return NoticeItem(notice: vm.myComments[idx]);
-                              },
-                            ),
-                          ],
-                        );
-                      }),
-                    ),
+                    child: Consumer<NoticeIndexViewModel>(
+                        builder: (context, vm, child) {
+                      return TabBarView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: [
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: vm.commentsToMe.length,
+                            itemBuilder: (ctx, idx) {
+                              return NoticeItem(notice: vm.commentsToMe[idx]);
+                            },
+                          ),
+                          ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: vm.myComments.length,
+                            itemBuilder: (ctx, idx) {
+                              return NoticeItem(notice: vm.myComments[idx]);
+                            },
+                          ),
+                        ],
+                      );
+                    }),
                   );
           }),
         ],

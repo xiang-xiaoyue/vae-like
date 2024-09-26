@@ -3,7 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/models/resp/models/notice.dart';
-import 'package:trump/pages/notice/sub/official/vm.dart';
+import 'package:trump/pages/notice/vm.dart';
 import 'package:trump/util/util.dart';
 
 class OfficialNoticePage extends StatelessWidget {
@@ -11,34 +11,31 @@ class OfficialNoticePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<OfficialViewModel>(
-      create: (context) => OfficialViewModel(),
-      child: Scaffold(
-        appBar: const CommonAppBar(title: "官方消息"),
-        body: Consumer<OfficialViewModel>(builder: (context, vm, child) {
-          return SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Center(
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: const EdgeInsets.only(bottom: 16),
-                    itemCount: vm.ns.length,
-                    itemBuilder: (context, index) {
-                      return _Item(
-                        notice: vm.ns[index],
-                      );
-                    },
-                  ),
+    return Scaffold(
+      appBar: const CommonAppBar(title: "官方消息"),
+      body: Consumer<NoticeIndexViewModel>(builder: (context, vm, child) {
+        return SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  padding: const EdgeInsets.only(bottom: 16),
+                  itemCount: vm.officialList.length,
+                  itemBuilder: (context, index) {
+                    return _Item(
+                      notice: vm.officialList[index],
+                    );
+                  },
                 ),
-                const NoMore(),
-              ],
-            ),
-          );
-        }),
-      ),
+              ),
+              const NoMore(),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

@@ -389,6 +389,14 @@ class Api {
     return ListResp.toListResp(res.data);
   }
 
+  // 把消息改为已读
+  // 如果type不为空，那么修改指定id之后的消息，若type为空，则修改指定id的消息，若都为空，则直接返回错误
+  Future<bool> readNotice({int id = 0, String type = ""}) async {
+    var res = await DioInstance.instance()
+        .put(path: "notice-list", data: {"id": id, "type": type});
+    return res.data.code == 0;
+  }
+
   // 提出建议与反馈advice
   Future<bool> createAdvice(String content, String adviceType) async {
     var res = await DioInstance.instance()

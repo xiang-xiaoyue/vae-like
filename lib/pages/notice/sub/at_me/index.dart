@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/pages/notice/components/go_back_leading.dart';
 import 'package:trump/pages/notice/components/item_card.dart';
-import 'package:trump/pages/notice/sub/at_me/vm.dart';
+import 'package:trump/pages/notice/vm.dart';
 
 class AtMeNoticePage extends StatefulWidget {
   const AtMeNoticePage({super.key});
@@ -28,16 +27,13 @@ class _AtMeNoticePageState extends State<AtMeNoticePage>
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: ChangeNotifierProvider<AtMeViewModel>(
-          create: (context) => AtMeViewModel(),
-          child: Stack(
-            children: [
-              Positioned(
-                child: _Page(),
-              ),
-              MsgGoBackLeading(),
-            ],
-          ),
+        child: Stack(
+          children: const [
+            Positioned(
+              child: _Page(),
+            ),
+            MsgGoBackLeading(),
+          ],
         ),
       ),
     );
@@ -55,7 +51,8 @@ class _Page extends StatelessWidget {
         children: [
           TwoTabAppBar(),
           Expanded(
-            child: Consumer<AtMeViewModel>(builder: (context, vm, child) {
+            child:
+                Consumer<NoticeIndexViewModel>(builder: (context, vm, child) {
               return TabBarView(
                 children: [
                   ListView.builder(
