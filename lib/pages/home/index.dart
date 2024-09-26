@@ -16,23 +16,31 @@ class HomePage extends StatelessWidget {
     return ChangeNotifierProvider<HomeViewModel>(
       create: (context) => HomeViewModel(),
       child: Consumer<HomeViewModel>(builder: (context, vm, _) {
-        return SafeArea(
-          child: NotificationListener<ScrollNotification>(
-            onNotification: (nf) {
-              if (nf.metrics.pixels + 30 >= nf.metrics.maxScrollExtent) {
-                vm.getTrendList();
-              }
-              return false;
-            },
-            child: const CustomScrollView(
-              slivers: [
-                _HomePageAppBar(),
-                _HomePic(),
-                _MenuTab(), // 行程、图集、作品、视频、活动
-                _LatestTrend(), //hot-user发表的最新post/comment,点击查看详情
-                _TrendListHeader(), // 官方动态头部
-                _TrendList(), // 官方动态列表
-              ],
+        return RefreshAndLoadMore(
+          onRefresh: () async {
+            vm.initConfig(vm.subType);
+            await vm.getTrendList(requireNewest: true);
+            await vm.getLatestContent();
+          },
+          onLoadMore: () async => await vm.getTrendList(),
+          child: SafeArea(
+            child: NotificationListener<ScrollNotification>(
+              onNotification: (nf) {
+                if (nf.metrics.pixels + 30 >= nf.metrics.maxScrollExtent) {
+                  vm.getTrendList();
+                }
+                return false;
+              },
+              child: const CustomScrollView(
+                slivers: [
+                  _HomePageAppBar(),
+                  _HomePic(),
+                  _MenuTab(), // 行程、图集、作品、视频、活动
+                  _LatestTrend(), //hot-user发表的最新post/comment,点击查看详情
+                  _TrendListHeader(), // 官方动态头部
+                  _TrendList(), // 官方动态列表
+                ],
+              ),
             ),
           ),
         );
@@ -123,7 +131,8 @@ class _TrendListHeader extends StatelessWidget {
                     },
                   ).then((subType) {
                     if (subType != null) {
-                      vm.getInitialSubTypeTrendList(subType);
+                      vm.initConfig(subType);
+                      vm.getTrendList();
                     }
                   });
                 }, //todo:按分类查询“官方动态”

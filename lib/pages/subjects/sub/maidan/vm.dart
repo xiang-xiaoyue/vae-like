@@ -30,11 +30,7 @@ class MaidanPageViewModel with ChangeNotifier {
   int currentPostId = 0; //当前被点击查看详情的post的id
 
   bool isLoadingPostList = false;
-  bool noMoreOldPost = false; // 没有更多旧数据
-  void setIsLoadingPostList(bool v) {
-    isLoadingPostList = v;
-    notifyListeners();
-  }
+  bool hasMorePost = true; // 有没有更多旧帖子可加载
 
   //查询全部话题,当前限制100个,todo:在主页面显示，应当传入限制数量
   Future getSubjectList() async {
@@ -59,11 +55,17 @@ class MaidanPageViewModel with ChangeNotifier {
 
   // 获取全部帖子列表,默认用于加载旧内容
   Future getPostList({bool requireNewest = false}) async {
-    if (requireNewest == false) {
-      _loadOldPostList();
-    } else {
-      _loadNewestPostList();
+    if (isLoadingPostList == true) {
+      notifyListeners();
+      return;
     }
+    isLoadingPostList = true;
+    if (requireNewest == false) {
+      await _loadOldPostList();
+    } else {
+      await _loadNewestPostList();
+    }
+    isLoadingPostList = false;
     notifyListeners();
   }
 
@@ -80,14 +82,16 @@ class MaidanPageViewModel with ChangeNotifier {
       postType: Constants.postTypeThread,
       currentPostId: posts[0].id,
     );
-    if ((listResp.list?.length ?? 0) > 0) {
-      listResp.list?.forEach((i) {
-        posts.insert(0, Post.fromJson(i));
-      });
-    }
+    listResp.list?.forEach((i) {
+      posts.insert(0, Post.fromJson(i));
+    });
   }
 
   Future _loadOldPostList() async {
+    if (hasMorePost == false) {
+      notifyListeners();
+      return;
+    }
     ListResp listResp = await Api.instance.getPostList(
       postType: Constants.postTypeThread,
       pageIndex: postPageIndex,
@@ -95,9 +99,10 @@ class MaidanPageViewModel with ChangeNotifier {
     );
     if (listResp.list == null) {
       // 旧数据已全部加载完
-      noMoreOldPost = true;
+      hasMorePost = false;
     }
     if ((listResp.list?.length ?? 0) > 0) {
+      hasMorePost = true;
       listResp.list?.forEach((item) {
         posts.add(Post.fromJson(item));
       });

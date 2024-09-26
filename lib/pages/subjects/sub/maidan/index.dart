@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:trump/components/avatar.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/models/resp/models/subject.dart';
 import 'package:trump/pages/notice/export.dart';
 import 'package:trump/pages/subjects/sub/maidan/vm.dart';
+
+// 下拉刷新与上拉加载更多
 
 // 广场
 class MaidanTabBarView extends StatefulWidget {
@@ -22,55 +23,36 @@ class _MaidanTabBarViewState extends State<MaidanTabBarView> {
     return ChangeNotifierProvider<MaidanPageViewModel>(
       create: (context) => MaidanPageViewModel(),
       child: Consumer<MaidanPageViewModel>(builder: (context, vm, _) {
-        return RefreshIndicator(
-          displacement: 20,
-          color: Colors.red,
-          backgroundColor: Colors.orange,
+        return RefreshAndLoadMore(
           onRefresh: () async {
-            vm.getRecommendedSubjectList();
-            vm.getSubjectList();
-            vm.getPostList(requireNewest: true);
+            await vm.getRecommendedSubjectList();
+            await vm.getSubjectList();
+            await vm.getPostList(requireNewest: true);
           },
-          child: NotificationListener<ScrollNotification>(
-            onNotification: (nf) {
-              if (nf.metrics.pixels + 30 >= nf.metrics.maxScrollExtent) {
-                if (vm.isLoadingPostList == true) {
-                  // 正在加载数据
-                } else {
-                  if (vm.noMoreOldPost == false) {
-                    vm.setIsLoadingPostList(true);
-                    vm.getPostList(requireNewest: false).then((_) {
-                      vm.setIsLoadingPostList(false);
-                    });
-                  }
-                }
-              }
-              return false;
-            },
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const _RecommendedSubjectList(),
-                  const _HotSubjectListHeader(),
-                  const _HotSubjectList(),
-                  ListView.separated(
-                    separatorBuilder: (ctx, idx) => const SizedBox(height: 4),
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: vm.posts.length + 1,
-                    itemBuilder: (ctx, idx) {
-                      if (idx == vm.posts.length) {
-                        return NoMore();
-                      }
-                      return PostItem(
-                          setCurrentPostId: (id) {
-                            vm.replacePostById(id);
-                          },
-                          post: vm.posts[idx]);
-                    },
-                  ),
-                ],
-              ),
+          onLoadMore: () async => await vm.getPostList(),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const _RecommendedSubjectList(),
+                const _HotSubjectListHeader(),
+                const _HotSubjectList(),
+                ListView.separated(
+                  separatorBuilder: (ctx, idx) => const SizedBox(height: 4),
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: vm.posts.length + 1,
+                  itemBuilder: (ctx, idx) {
+                    if (idx == vm.posts.length) {
+                      return NoMore();
+                    }
+                    return PostItem(
+                        setCurrentPostId: (id) {
+                          vm.replacePostById(id);
+                        },
+                        post: vm.posts[idx]);
+                  },
+                ),
+              ],
             ),
           ),
         );

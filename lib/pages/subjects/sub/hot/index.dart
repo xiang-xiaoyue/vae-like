@@ -18,19 +18,28 @@ class _HotTabBarViewState extends State<HotTabBarView> {
     return ChangeNotifierProvider<HotPostViewModel>(
       create: (context) => HotPostViewModel(),
       child: Consumer<HotPostViewModel>(builder: (context, vm, child) {
-        return Padding(
-          padding: EdgeInsets.all(16.0),
-          child: ListView.separated(
-            itemCount: vm.count + 1,
-            itemBuilder: (context, index) {
-              if (index == vm.count) {
-                return NoMore();
-              }
-              return PostItem(post: vm.posts[index]);
-            },
-            separatorBuilder: (context, index) {
-              return SizedBox(height: 4);
-            },
+        return RefreshIndicator(
+          onRefresh: () async {
+            await vm.getList(requireNewest: true);
+          },
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: RefreshAndLoadMore(
+              onRefresh: () async => vm.getList(requireNewest: true),
+              onLoadMore: () async => vm.getList(),
+              child: ListView.separated(
+                itemCount: vm.count + 1,
+                itemBuilder: (context, index) {
+                  if (index == vm.count) {
+                    return NoMore();
+                  }
+                  return PostItem(post: vm.posts[index]);
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(height: 4);
+                },
+              ),
+            ),
           ),
         );
       }),

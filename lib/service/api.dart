@@ -57,8 +57,13 @@ class Api {
   }
 
   // 查询全部hot的帖子(作者自己加热的帖子，不是按热度排行的。)
-  Future<ListResp> getHotPostList() async {
-    var res = await DioInstance.instance().get(path: "hot-post-list");
+  Future<ListResp> getHotPostList(
+      {int pageIndex = 0, int pageSize = 0, int currentPostId = 0}) async {
+    var res = await DioInstance.instance().get(path: "hot-post-list", params: {
+      "page_index": pageIndex,
+      "page_size": pageSize,
+      "current_post_id": currentPostId,
+    });
     return ListResp.toListResp(res.data);
   }
 

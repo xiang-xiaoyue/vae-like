@@ -12,7 +12,7 @@ import 'package:trump/service/api.dart';
 class HomeViewModel with ChangeNotifier {
   HomeViewModel() {
     //getTrendList();
-    getInitialSubTypeTrendList("");
+    getTrendList();
     getLatestContent();
   }
 
@@ -22,17 +22,16 @@ class HomeViewModel with ChangeNotifier {
   List<Post> trends = [];
   Content? latestContent;
 
-  // 获取官方动态列表,""表示获取全部trend类型.
-  String subType = "";
-  // 切换子类型时使用
-  Future getInitialSubTypeTrendList(String t) async {
-    subType = t;
-    trends.clear();
+  // 初始化配置
+  void initConfig(String t) {
     trendsPageIndex = TrumpCommon.pageIndex;
     trendsPageSize = TrumpCommon.pageSize;
-    await getTrendList();
+    subType = t;
+    notifyListeners();
   }
 
+  // 获取官方动态列表,""表示获取全部trend类型.
+  String subType = "";
   bool isLoadingTrendList = false;
 
   // 默认加载旧数据
