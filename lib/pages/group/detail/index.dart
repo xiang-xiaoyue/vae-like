@@ -67,7 +67,7 @@ class GroupDetailPage extends StatelessWidget {
                                 rightChild: Row(
                                   children: [
                                     if (vm.group?.members != null &&
-                                        vm.group!.members!.length > 0 &&
+                                        vm.group!.members!.isNotEmpty &&
                                         vm.group?.members![0] != null)
                                       _GroupMemberAvatar(
                                           avatar:

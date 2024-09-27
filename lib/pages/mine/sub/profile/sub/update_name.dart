@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
-import 'package:trump/models/resp/models/user.dart';
 import 'package:trump/pages/mine/vm.dart';
-import 'package:trump/vm.dart';
 
 //修改昵称
 class UpdateNamePage extends StatefulWidget {
@@ -27,7 +25,7 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
 
   @override
   Widget build(BuildContext context) {
-    var _appBar = CommonAppBar(
+    var appBar = CommonAppBar(
       title: "修改用户名",
       rightPadding: 0,
       actions: [
@@ -50,7 +48,7 @@ class _UpdateNamePageState extends State<UpdateNamePage> {
 
     return Scaffold(
       backgroundColor: Colors.grey.shade300,
-      appBar: _appBar,
+      appBar: appBar,
       body: Column(
         children: [
           const SizedBox(height: 4),

@@ -4,7 +4,6 @@
 import 'package:trump/models/resp/models/user.dart';
 import 'package:trump/models/resp/models/post.dart';
 
-import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 

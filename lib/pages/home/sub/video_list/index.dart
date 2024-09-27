@@ -8,7 +8,6 @@ import 'package:trump/configs/const.dart';
 import 'package:trump/models/request/like.dart';
 import 'package:trump/models/resp/index.dart';
 import 'package:trump/pages/home/sub/video_list/vm.dart';
-import 'package:trump/pages/home/vm.dart';
 import 'package:trump/service/api.dart';
 
 // 用户发布的视频列表页面

@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
-import 'package:trump/components/keep_alive_wrapper.dart';
 import 'package:trump/pages/notice/export.dart';
 import 'package:trump/pages/search/components/search_nothing.dart';
 import 'package:trump/pages/search/components/search_page_subject_item.dart';
 import 'package:trump/pages/search/components/user_item.dart';
-import 'package:trump/pages/search/sub/main/index.dart';
 import 'package:trump/pages/search/sub/main/vm.dart';
-import 'package:trump/pages/search/vm.dart';
 
 // 展示搜索结果列表
 class SearchMainResultPage extends StatefulWidget {

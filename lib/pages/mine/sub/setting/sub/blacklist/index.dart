@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:trump/components/app_bar.dart';
-import 'package:trump/components/avatar.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/models/resp/models/user.dart';
 import 'package:trump/pages/mine/sub/setting/sub/blacklist/vm.dart';

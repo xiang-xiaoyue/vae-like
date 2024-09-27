@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SearchHistoryItem extends StatelessWidget {
   final String text;
-  const SearchHistoryItem({
+  const SearchHistoryItem({super.key, 
     required this.text,
   });
 

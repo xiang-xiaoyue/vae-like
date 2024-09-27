@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
-import 'package:trump/components/tem_placeholder.dart';
 import 'package:trump/pages/discover/sub/post_hot_rank/vm.dart';
 
 // 最热帖子排行

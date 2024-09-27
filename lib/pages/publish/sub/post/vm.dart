@@ -69,7 +69,9 @@ class CreatePostViewModel with ChangeNotifier {
 
   // 增加图文中的图片
   void addImage(String url) {
-    np.imageList?.add(url);
+    np.imageList ??= [];
+    np.imageList!.add(url);
+    print("保存图片：$url---${np.imageList}");
     notifyListeners();
   }
 

@@ -7,7 +7,6 @@ import 'package:trump/components/toast.dart';
 import 'package:trump/pages/publish/components/pic_item.dart';
 import 'package:trump/pages/publish/components/upload_pic.dart';
 import 'package:trump/pages/publish/sub/subject/vm.dart';
-import 'package:trump/util/util.dart';
 
 // 申请话题
 class SubjectApplyPage extends StatelessWidget {

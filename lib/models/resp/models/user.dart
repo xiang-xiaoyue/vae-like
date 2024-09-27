@@ -2,9 +2,7 @@
 //
 //     final user = userFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
-import './currency.dart';
 import 'dart:convert';
 
 part 'user.g.dart';

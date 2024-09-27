@@ -44,6 +44,7 @@ class DioInstance {
       client.badCertificateCallback = (cert, host, port) {
         return true;
       };
+      return null;
     };
   }
 

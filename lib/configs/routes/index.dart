@@ -3,16 +3,13 @@ import 'package:trump/configs/const.dart';
 import 'package:trump/configs/routes/home.dart';
 import 'package:trump/pages/for_test.dart';
 import 'package:trump/pages/index.dart';
-import 'package:trump/pages/notice/export.dart';
 
 import 'package:trump/configs/routes/discover.dart';
 import 'package:trump/configs/routes/help.dart';
 import 'package:trump/configs/routes/mine.dart';
 import 'package:trump/configs/routes/notice.dart';
-import 'package:trump/pages/discover/index.dart';
 import 'package:trump/pages/group/exports.dart';
 import 'package:trump/pages/help/index.dart';
-import 'package:trump/pages/mine/index.dart';
 import 'package:trump/pages/pic_detail/index.dart';
 import 'package:trump/pages/post/exports.dart';
 import 'package:trump/pages/publish/export.dart';

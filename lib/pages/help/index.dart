@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:trump/components/app_bar.dart';
-import 'package:trump/components/leading.dart';
 
 // 帮助中心
 class HelpCenterPage extends StatelessWidget {

@@ -94,7 +94,7 @@ class MainSearchViewModel with ChangeNotifier {
     listResp.list?.forEach((item) {
       subjectList.add(Subject.fromJson(item));
     });
-    print("subject数量：${subjectCount}");
+    print("subject数量：$subjectCount");
     notifyListeners();
   }
 

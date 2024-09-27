@@ -2,7 +2,6 @@
 //
 //     final taskNote = taskNoteFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';
 

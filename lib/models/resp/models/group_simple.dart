@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:trump/models/resp/models/user.dart';
 import 'dart:convert';
 
 part 'group_simple.g.dart';

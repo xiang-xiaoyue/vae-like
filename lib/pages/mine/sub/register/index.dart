@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/components/toast.dart';
-import 'package:trump/models/request/user.dart';
 import 'package:trump/pages/mine/component/text_field.dart';
 import 'package:trump/pages/mine/sub/register/vm.dart';
 import 'package:trump/pages/mine/vm.dart';

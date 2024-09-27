@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/pages/publish/components/upload_bar.dart';
-import 'package:trump/pages/publish/components/upload_pic.dart';
 import 'package:trump/pages/publish/sub/post/conponents/content_input.dart';
 import 'package:trump/pages/publish/sub/post/vm.dart';
-import 'package:trump/util/util.dart';
 
 // 只能上传一个视频
 class NewPostVideoAndTextMain extends StatefulWidget {

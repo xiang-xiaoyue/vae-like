@@ -1,7 +1,6 @@
 //     final post = postFromJson(jsonString);
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:trump/models/resp/models/comment.dart';
 import 'dart:convert';
 
 import 'package:trump/models/resp/models/user.dart';

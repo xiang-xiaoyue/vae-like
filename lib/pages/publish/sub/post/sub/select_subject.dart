@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:trump/components/search/app_bar.dart';
 import 'package:trump/models/resp/models/subject.dart';
 import 'package:trump/pages/publish/sub/post/sub/vm.dart';
-import 'package:trump/pages/search/components/search_page_subject_item.dart';
 import 'package:trump/pages/subjects/components/item.dart';
 
 // 发布帖子时选择话题

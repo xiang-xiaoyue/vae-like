@@ -5,7 +5,6 @@ import 'package:trump/components/avatar.dart';
 import 'package:trump/components/leading.dart';
 import 'package:trump/fonts/index.dart';
 import 'package:trump/pages/mine/vm.dart';
-import 'package:trump/vm.dart';
 
 var _decoration = BoxDecoration(
   color: Colors.white,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:trump/components/avatar.dart';
 
 class GroupMemberItem extends StatelessWidget {
-  const GroupMemberItem();
+  const GroupMemberItem({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 import 'package:provider/provider.dart';
-import 'package:trump/components/app_bar.dart';
-import 'package:trump/components/button.dart';
 import 'package:trump/components/index.dart';
-import 'package:trump/components/input.dart';
 import 'package:trump/pages/mine/sub/setting/sub/bind_phone/vm.dart';
 
 import '../../components/input.dart';

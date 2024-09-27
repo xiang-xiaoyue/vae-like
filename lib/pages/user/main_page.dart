@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:trump/components/buttons/button.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/configs/const.dart';
 import 'package:trump/pages/mine/vm.dart';

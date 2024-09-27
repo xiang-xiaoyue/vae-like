@@ -67,7 +67,7 @@ class GoodsDetailPage extends StatelessWidget {
                                   fontWeight: FontWeight.w700, fontSize: 18),
                             ),
                             Text('分享到'),
-                            Container(height: 60, child: Text("五个分享按钮")),
+                            SizedBox(height: 60, child: Text("五个分享按钮")),
                           ],
                         ),
                       ),

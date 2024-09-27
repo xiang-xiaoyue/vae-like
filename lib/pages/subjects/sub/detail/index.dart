@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:trump/components/buttons/outlined.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/pages/notice/export.dart';
 import 'package:trump/pages/subjects/sub/detail/vm.dart';

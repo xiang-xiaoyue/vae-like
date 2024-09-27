@@ -92,10 +92,10 @@ class _PageState extends State<_Page> {
     return DefaultTabController(
       length: 2,
       child: Column(
-        children: [
-          const TwoTabAppBar(leftText: "关注的话题", rightText: "关注的城市"),
+        children: const [
+          TwoTabAppBar(leftText: "关注的话题", rightText: "关注的城市"),
           Expanded(
-            child: const TabBarView(
+            child: TabBarView(
               physics: NeverScrollableScrollPhysics(),
               children: [
                 _FollowingSubjectList(),

@@ -2,8 +2,6 @@
 //
 //     final subject = subjectFromJson(jsonString);
 
-import 'package:flutter/widgets.dart';
-import 'package:meta/meta.dart';
 import './user.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'dart:convert';

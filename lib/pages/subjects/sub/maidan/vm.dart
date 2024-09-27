@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:trump/configs/const.dart';
-import 'package:trump/configs/routes/notice.dart';
 import 'package:trump/models/resp/index.dart';
 import 'package:trump/models/resp/models/subject.dart';
 import 'package:trump/service/api.dart';

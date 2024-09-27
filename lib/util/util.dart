@@ -89,7 +89,6 @@ String absoluteTime(int stamp,
 Future<String> uploadSingleSelectedFile() async {
   FilePickerResult? result = await FilePicker.platform.pickFiles();
   if (result != null) {
-    //PlatformFile file = result.files.first;
     File file = File(result.files.single.path!);
     FormData fd = FormData.fromMap({
       'file': MultipartFile.fromFileSync(file.path),
@@ -97,12 +96,12 @@ Future<String> uploadSingleSelectedFile() async {
     });
     Resp resp = await Api.instance.uploadSingleFile(fd);
     if (resp.code == 0) {
-      return "${TrumpCommon.baseURL}files/${resp.data}";
+      return resp.data;
     } else {
       return resp.msg ?? '失败';
     }
   }
-  return "";
+  return "选不到图片";
 }
 
 // 上传文件
@@ -116,7 +115,7 @@ Future<String> uploadSingleFile(String filePath) async {
     //"file": MultipartFile.fromBytes(await file.readAsBytes()).finalize(),
   }));
   if (resp.code == 0) {
-    return "${TrumpCommon.baseURL}files/${resp.data}";
+    return resp.data;
   } else {
     return resp.msg ?? '失败';
   }

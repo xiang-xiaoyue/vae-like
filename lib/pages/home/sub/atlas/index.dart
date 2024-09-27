@@ -15,7 +15,9 @@ class AtlasPage extends StatelessWidget {
         crossAxisSpacing: 8,
         mainAxisSpacing: 8,
         padding: EdgeInsets.all(16),
-        children: [
+        primary: false,
+        shrinkWrap: true,
+        children: const [
           _AtlasItem(),
           _AtlasItem(),
           _AtlasItem(),
@@ -25,8 +27,6 @@ class AtlasPage extends StatelessWidget {
           _AtlasItem(),
           _AtlasItem(),
         ],
-        primary: false,
-        shrinkWrap: true,
       ),
     );
   }
@@ -56,7 +56,7 @@ class _AtlasItem extends StatelessWidget {
           bottom: 16,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+            children: const [
               Text(
                 "呼吸之野，太原站高清图集",
                 style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),

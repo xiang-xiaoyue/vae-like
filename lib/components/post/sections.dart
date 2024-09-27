@@ -9,7 +9,6 @@ import 'package:trump/components/icon_and_text.dart';
 import 'package:trump/configs/const.dart';
 import 'package:trump/models/resp/models/post.dart';
 import 'package:trump/models/resp/models/vote_result_item.dart';
-import 'package:trump/pages/publish/components/pic_item.dart';
 import 'package:trump/util/util.dart';
 
 // post详情页面 顶部的用户信息和发布时间

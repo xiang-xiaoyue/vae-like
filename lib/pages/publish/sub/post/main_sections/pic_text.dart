@@ -52,6 +52,7 @@ class NewPostPicAndTextMain extends StatelessWidget {
                         }),
                       if ((vm.np.imageList?.length ?? 0) < 9)
                         ItemForUpload(upload: (url) {
+                          print("url:$url");
                           if (url.contains("http")) {
                             vm.addImage(url);
                           } else {

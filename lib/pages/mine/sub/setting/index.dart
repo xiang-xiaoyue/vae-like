@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'package:trump/components/app_bar.dart';
 import 'package:trump/components/toast.dart';
 import 'package:trump/pages/mine/vm.dart';
-import 'package:trump/service/save.dart';
 import 'package:trump/vm.dart';
 
 // 个人设置界面

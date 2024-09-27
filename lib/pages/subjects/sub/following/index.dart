@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:trump/components/exports.dart';
 import 'package:trump/components/index.dart';
 import 'package:trump/pages/subjects/components/sample_item.dart';
 import 'package:trump/pages/subjects/sub/following/vm.dart';
@@ -68,7 +67,7 @@ class _FollowingSubjectBar extends StatelessWidget {
       color: Colors.white,
       height: 60,
       child: Stack(
-        children: [
+        children: const [
           _FollowingSubjectList(),
           _MoreFollowingSubject(),
         ],

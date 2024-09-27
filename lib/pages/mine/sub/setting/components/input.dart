@@ -5,7 +5,7 @@ class ItemForBind extends StatefulWidget {
   final String text;
   final bool isReverse;
   final Function onChange;
-  const ItemForBind({
+  const ItemForBind({super.key, 
     required this.text,
     this.isReverse = false,
     required this.onChange,

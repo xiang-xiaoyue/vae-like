@@ -1,14 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:trump/pages/search/sub/main/vm.dart';
-import 'package:trump/pages/search/vm.dart';
 
 // 主搜索页面顶部搜索部分
 class SearchInputSection extends StatefulWidget {
   final String text;
-  const SearchInputSection({this.text = ''});
+  const SearchInputSection({super.key, this.text = ''});
 
   @override
   State<SearchInputSection> createState() => _SearchInputSectionState();

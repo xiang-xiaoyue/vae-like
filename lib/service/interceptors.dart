@@ -8,7 +8,7 @@ class ResponseInterceptor extends Interceptor {
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     options.headers["one"] = "two";
     SaveService.readString().then((token) {
-      print("这是拦截器得到token:${token}");
+      print("这是拦截器得到token:$token");
       options.headers["X-Token"] = token;
       super.onRequest(options, handler);
     });

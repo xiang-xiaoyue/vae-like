@@ -2,7 +2,6 @@
 //
 //     final group = groupFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'package:json_annotation/json_annotation.dart';
 import './user.dart';
 import 'dart:convert';

@@ -5,7 +5,7 @@ import 'package:trump/models/resp/models/group_simple.dart';
 
 class SearchGroupItem extends StatelessWidget {
   final GroupSimple gs;
-  const SearchGroupItem({required this.gs});
+  const SearchGroupItem({super.key, required this.gs});
 
   @override
   Widget build(BuildContext context) {
